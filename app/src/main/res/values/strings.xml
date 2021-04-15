@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Final Project</string>
+
+    <string name="nav_saved">Saved</string>
+    <string name="nav_generate">Generate</string>
+    <string name="nav_random">Random</string>
+    <string name="nav_explore">Explore</string>
+
+    <string name="generate_title">New Palettes</string>
+    <string name="generate_random">Generate random</string>
+    <string name="generate_image">Generate palette from image</string>
+    <string name="generate_scratch">Create palette from scratch</string>
+    <string name="generate_or">OR</string>
+
+    <string name="explore_title">Explore</string>
+
+    <string name="saved_title">Saved Palettes</string>
+
+</resources>

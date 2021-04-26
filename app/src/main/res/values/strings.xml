@@ -7,12 +7,13 @@
     <string name="nav_explore">Explore</string>
 
     <string name="generate_title">New Palettes</string>
-    <string name="generate_random">Generate random</string>
-    <string name="generate_image">Generate palette from image</string>
-    <string name="generate_scratch">Create palette from scratch</string>
+    <string name="generate_button_random">Generate random</string>
+    <string name="generate_button_image">Generate palette from image</string>
+    <string name="generate_button_scratch">Create palette from scratch</string>
     <string name="generate_or">OR</string>
 
     <string name="explore_title">Explore</string>
+    <string name="button_save">Save</string>
 
     <string name="saved_title">Saved Palettes</string>
 

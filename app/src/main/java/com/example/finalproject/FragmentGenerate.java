@@ -95,6 +95,7 @@ public class FragmentGenerate extends Fragment {
 
                 int width = imageView.getWidth();
                 int height = imageView.getHeight();
+                Log.d("info", Integer.toString(height));
                 int sectionWidth = width / 5;
 
                 bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -175,7 +176,31 @@ public class FragmentGenerate extends Fragment {
         paints.add(pD);
         paints.add(pE);
 
-         */
+        int width = imageView.getWidth();
+        int height = imageView.getHeight();
+        int sectionWidth = width / 5;
+
+        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        imageView.setImageBitmap(bitmap);
+        canvas = new Canvas(bitmap);
+
+        for (int i = 0; i < paints.size(); i++) {
+
+            int left = sectionWidth*i;
+            int top = 0;
+            int right = sectionWidth*(i+1);
+            int bottom = height;
+
+            // int color = paletteRand.get(i);
+
+            // Paint paint = new Paint();
+            // paint.setColor(color);
+
+            Rect rect = new Rect(left, top, right, bottom);
+            canvas.drawRect(rect, paints.get(i));
+        }
+        */
+
 
         // add header to client
         client.addHeader("Accept", "application/json");
@@ -214,7 +239,7 @@ public class FragmentGenerate extends Fragment {
                     JSONObject json = new JSONObject(new String(responseBody));
                     JSONArray result = json.getJSONArray("result");
 
-                    // Log.i("values", result.get(0).toString());
+                    Log.i("values", result.get(0).toString());
 
                     for (int i = 0; i < result.length(); i++) {
                         JSONArray values = result.getJSONArray(i);

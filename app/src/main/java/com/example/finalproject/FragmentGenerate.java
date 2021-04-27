@@ -14,12 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -37,9 +35,11 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class FragmentGenerate extends Fragment {
-    private Canvas canvas;
-    private Bitmap bitmap;
-    private ImageView imageView;
+    private ImageView color1;
+    private ImageView color2;
+    private ImageView color3;
+    private ImageView color4;
+    private ImageView color5;
 
     private Button button_random;
 
@@ -51,7 +51,11 @@ public class FragmentGenerate extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_generate, container, false);
 
-        imageView = view.findViewById(R.id.imageView_generate_palette);
+        color1 = view.findViewById(R.id.color1_generate);
+        color2 = view.findViewById(R.id.color2_generate);
+        color3 = view.findViewById(R.id.color3_generate);
+        color4 = view.findViewById(R.id.color4_generate);
+        color5 = view.findViewById(R.id.color5_generate);
         button_random = view.findViewById(R.id.button_random);
 
         button_random.setOnClickListener(new View.OnClickListener() {
@@ -93,14 +97,17 @@ public class FragmentGenerate extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.d("api response", new String(responseBody));
 
-                int width = imageView.getWidth();
-                int height = imageView.getHeight();
+                int width = color1.getWidth();
+                int height = color1.getHeight();
                 Log.d("info", Integer.toString(height));
                 int sectionWidth = width / 5;
 
-                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                imageView.setImageBitmap(bitmap);
-                canvas = new Canvas(bitmap);
+                ArrayList<ImageView> views = new ArrayList<>();
+                views.add(color1);
+                views.add(color2);
+                views.add(color3);
+                views.add(color4);
+                views.add(color5);
 
                 try {
                     JSONObject json = new JSONObject(new String(responseBody));
@@ -109,6 +116,13 @@ public class FragmentGenerate extends Fragment {
                     // Log.i("values", result.get(0).toString());
 
                     for (int i = 0; i < result.length(); i++) {
+                        Bitmap bitmap;
+                        Canvas canvas;
+
+                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                        views.get(i).setImageBitmap(bitmap);
+                        canvas = new Canvas(bitmap);
+
                         JSONArray values = result.getJSONArray(i);
                         int r = values.getInt(0);
                         int g = values.getInt(1);
@@ -116,10 +130,10 @@ public class FragmentGenerate extends Fragment {
                         Paint paint = new Paint();
                         paint.setColor(Color.rgb(r, g, b));
 
-                        int left = sectionWidth*i;
+                        int left = 0;
                         int top = 0;
-                        int right = sectionWidth*(i+1);
-                        int bottom = height;
+                        int right = bitmap.getWidth();
+                        int bottom = bitmap.getHeight();
 
                         // int color = paletteRand.get(i);
 
@@ -227,21 +241,32 @@ public class FragmentGenerate extends Fragment {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.d("api response", new String(responseBody));
 
-                int width = imageView.getWidth();
-                int height = imageView.getHeight();
+                int width = color1.getWidth();
+                int height = color1.getHeight();
+                Log.d("info", Integer.toString(height));
                 int sectionWidth = width / 5;
 
-                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                imageView.setImageBitmap(bitmap);
-                canvas = new Canvas(bitmap);
+                ArrayList<ImageView> views = new ArrayList<>();
+                views.add(color1);
+                views.add(color2);
+                views.add(color3);
+                views.add(color4);
+                views.add(color5);
 
                 try {
                     JSONObject json = new JSONObject(new String(responseBody));
                     JSONArray result = json.getJSONArray("result");
 
-                    Log.i("values", result.get(0).toString());
+                    // Log.i("values", result.get(0).toString());
 
                     for (int i = 0; i < result.length(); i++) {
+                        Bitmap bitmap;
+                        Canvas canvas;
+
+                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                        views.get(i).setImageBitmap(bitmap);
+                        canvas = new Canvas(bitmap);
+
                         JSONArray values = result.getJSONArray(i);
                         int r = values.getInt(0);
                         int g = values.getInt(1);
@@ -249,10 +274,10 @@ public class FragmentGenerate extends Fragment {
                         Paint paint = new Paint();
                         paint.setColor(Color.rgb(r, g, b));
 
-                        int left = sectionWidth*i;
+                        int left = 0;
                         int top = 0;
-                        int right = sectionWidth*(i+1);
-                        int bottom = height;
+                        int right = bitmap.getWidth();
+                        int bottom = bitmap.getHeight();
 
                         // int color = paletteRand.get(i);
 

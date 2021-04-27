@@ -16,5 +16,8 @@
     <string name="button_save">Save</string>
 
     <string name="saved_title">Saved Palettes</string>
+    <string name="button_delete">Del</string>
+    <string name="button_view">View</string>
+    <string name="button_edit">Edit</string>
 
 </resources>

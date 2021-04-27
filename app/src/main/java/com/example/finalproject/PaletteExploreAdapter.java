@@ -6,13 +6,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,8 +46,6 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Palette palette = palettes.get(position);
-        Bitmap bitmap;
-        Canvas canvas;
 
         holder.textView_name.setText(palette.getName());
 
@@ -57,13 +55,22 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
 
         Log.d("size", Integer.toString(sectionWidth));
 
-        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        holder.imageView.setImageBitmap(bitmap);
-        canvas = new Canvas(bitmap);
-
         ArrayList<ArrayList<Integer>> colors = palette.getColors();
+        ArrayList<ImageView> views = new ArrayList<>();
+        views.add(holder.color1);
+        views.add(holder.color2);
+        views.add(holder.color3);
+        views.add(holder.color4);
+        views.add(holder.color5);
 
         for (int i = 0; i < colors.size(); i++) {
+            Bitmap bitmap;
+            Canvas canvas;
+
+            bitmap = Bitmap.createBitmap(sectionWidth, height, Bitmap.Config.ARGB_8888);
+            views.get(i).setImageBitmap(bitmap);
+            canvas = new Canvas(bitmap);
+
             ArrayList<Integer> values = colors.get(i);
             int r = values.get(0);
             int g = values.get(1);
@@ -71,10 +78,10 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
             Paint paint = new Paint();
             paint.setColor(Color.rgb(r, g, b));
 
-            int left = sectionWidth*i;
+            int left = 0;
             int top = 0;
-            int right = sectionWidth*(i+1);
-            int bottom = height;
+            int right = bitmap.getWidth();
+            int bottom = bitmap.getHeight();
 
             Rect rect = new Rect(left, top, right, bottom);
             canvas.drawRect(rect, paint);
@@ -88,13 +95,23 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView_name;
-        ImageView imageView;
+        ImageView color1;
+        ImageView color2;
+        ImageView color3;
+        ImageView color4;
+        ImageView color5;
+        LinearLayout linearLayout;
         Button button_save;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView_name = itemView.findViewById(R.id.textView_explore_name);
-            imageView = itemView.findViewById(R.id.imageView_item_palette_explore);
+            color1 = itemView.findViewById(R.id.color1_explore);
+            color2 = itemView.findViewById(R.id.color2_explore);
+            color3 = itemView.findViewById(R.id.color3_explore);
+            color4 = itemView.findViewById(R.id.color4_explore);
+            color5 = itemView.findViewById(R.id.color5_explore);
+            linearLayout = itemView.findViewById(R.id.linearLayout_item_palette_explore);
             button_save = itemView.findViewById(R.id.button_explore_save);
             button_save.setOnClickListener(this);
         }

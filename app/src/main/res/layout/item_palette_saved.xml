@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textView_explore_name"
+        android:id="@+id/textView_saved_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -18,67 +18,99 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout_item_palette_explore"
+        android:id="@+id/linearLayout_saved"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_explore_name">
+        app:layout_constraintTop_toBottomOf="@+id/textView_saved_name">
 
         <ImageView
-            android:id="@+id/color1_explore"
+            android:id="@+id/color1_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"/>
 
         <ImageView
-            android:id="@+id/color2_explore"
+            android:id="@+id/color2_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"/>
 
         <ImageView
-            android:id="@+id/color3_explore"
+            android:id="@+id/color3_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"/>
 
         <ImageView
-            android:id="@+id/color4_explore"
+            android:id="@+id/color4_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"/>
 
         <ImageView
-            android:id="@+id/color5_explore"
+            android:id="@+id/color5_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_explore_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/button_save"
-        app:icon="@android:drawable/ic_input_add"
-        app:iconGravity="textStart"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_item_palette_explore" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_saved">
+
+        <Button
+            android:id="@+id/button_saved_delete"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_delete"
+            app:icon="@android:drawable/ic_menu_delete"
+            app:iconGravity="textStart" />
+
+        <Button
+            android:id="@+id/button_saved_view"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_view"
+            app:icon="@android:drawable/ic_menu_view"
+            app:iconGravity="textStart" />
+
+        <Button
+            android:id="@+id/button_saved_edit"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_edit"
+            app:icon="@android:drawable/ic_menu_edit"
+            app:iconGravity="textStart" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

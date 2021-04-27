@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
@@ -42,6 +43,7 @@ public class FragmentGenerate extends Fragment {
     private ImageView color5;
 
     private Button button_random;
+    private Button button_image;
 
     private static final String api_url="http://colormind.io/api/";
     private static AsyncHttpClient client = new AsyncHttpClient();
@@ -57,11 +59,20 @@ public class FragmentGenerate extends Fragment {
         color4 = view.findViewById(R.id.color4_generate);
         color5 = view.findViewById(R.id.color5_generate);
         button_random = view.findViewById(R.id.button_random);
+        button_image = view.findViewById(R.id.button_image);
 
         button_random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawSomething(v);
+            }
+        });
+
+        button_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ImageActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
 

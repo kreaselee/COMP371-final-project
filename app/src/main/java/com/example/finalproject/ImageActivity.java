@@ -98,8 +98,6 @@ public class ImageActivity extends AppCompatActivity {
 
             int width = color1.getWidth();
             int height = color1.getHeight();
-            Log.d("info", Integer.toString(height));
-            int sectionWidth = width / 5;
 
             for (int i = 0; i < colors.size(); i++) {
                 Bitmap bitmap;
@@ -116,11 +114,6 @@ public class ImageActivity extends AppCompatActivity {
                 int top = 0;
                 int right = bitmap.getWidth();
                 int bottom = bitmap.getHeight();
-
-                // int color = paletteRand.get(i);
-
-                // Paint paint = new Paint();
-                // paint.setColor(color);
 
                 Rect rect = new Rect(left, top, right, bottom);
                 canvas.drawRect(rect, paint);

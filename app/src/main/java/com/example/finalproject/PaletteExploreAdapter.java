@@ -53,8 +53,6 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
         int height = 525;
         int sectionWidth = width / palette.getColors().size();
 
-        Log.d("size", Integer.toString(sectionWidth));
-
         ArrayList<ArrayList<Integer>> colors = palette.getColors();
         ArrayList<ImageView> views = new ArrayList<>();
         views.add(holder.color1);

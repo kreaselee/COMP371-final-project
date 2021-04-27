@@ -111,7 +111,6 @@ public class FragmentGenerate extends Fragment {
                 int width = color1.getWidth();
                 int height = color1.getHeight();
                 Log.d("info", Integer.toString(height));
-                int sectionWidth = width / 5;
 
                 ArrayList<ImageView> views = new ArrayList<>();
                 views.add(color1);
@@ -123,8 +122,6 @@ public class FragmentGenerate extends Fragment {
                 try {
                     JSONObject json = new JSONObject(new String(responseBody));
                     JSONArray result = json.getJSONArray("result");
-
-                    // Log.i("values", result.get(0).toString());
 
                     for (int i = 0; i < result.length(); i++) {
                         Bitmap bitmap;
@@ -146,16 +143,9 @@ public class FragmentGenerate extends Fragment {
                         int right = bitmap.getWidth();
                         int bottom = bitmap.getHeight();
 
-                        // int color = paletteRand.get(i);
-
-                        // Paint paint = new Paint();
-                        // paint.setColor(color);
-
                         Rect rect = new Rect(left, top, right, bottom);
                         canvas.drawRect(rect, paint);
                     }
-
-                    // Log.i("palette", palette.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();

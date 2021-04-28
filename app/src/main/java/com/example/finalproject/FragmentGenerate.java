@@ -64,7 +64,7 @@ public class FragmentGenerate extends Fragment {
         button_random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawSomething(v);
+                generatePalette(v);
             }
         });
 
@@ -83,6 +83,9 @@ public class FragmentGenerate extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        generatePalette(view);
+
+        /*
         // add header to client
         client.addHeader("Accept", "application/json");
         RequestParams params = new RequestParams();
@@ -159,9 +162,10 @@ public class FragmentGenerate extends Fragment {
             }
         });
 
+         */
     }
 
-    public void drawSomething(View view) {
+    public void generatePalette(View view) {
 
         /*
         Paint pA = new Paint();

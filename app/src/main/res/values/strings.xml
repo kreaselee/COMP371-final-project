@@ -14,6 +14,7 @@
 
     <string name="image_palette">Image to Palette</string>
     <string name="button_choose_image">Choose an image</string>
+    <string name="button_cancel">Cancel</string>
 
     <string name="explore_title">Explore</string>
     <string name="button_save">Save</string>

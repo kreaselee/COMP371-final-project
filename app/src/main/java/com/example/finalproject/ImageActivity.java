@@ -36,6 +36,7 @@ public class ImageActivity extends AppCompatActivity {
 
     private Button button_choose;
     private Button button_save;
+    private Button button_cancel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class ImageActivity extends AppCompatActivity {
 
         button_choose = findViewById(R.id.button_choose_image);
         button_save = findViewById(R.id.button_save_image_palette);
+        button_cancel = findViewById(R.id.button_cancel_image_palette);
 
         button_choose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +66,13 @@ public class ImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

@@ -24,4 +24,10 @@
     <string name="button_view">View</string>
     <string name="button_edit">Edit</string>
 
+    <string name="scratch_palette">Create Palette</string>
+    <string name="tab_hex">HEX</string>
+    <string name="pound">#</string>
+    <string name="hex">FFFFFF</string>
+    <string name="tab_rgb">RGB</string>
+    <string name="tab_picker">PICKER</string>
 </resources>

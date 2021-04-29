@@ -13,19 +13,21 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:gravity="end"
         android:text="@string/image_palette"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_cancel_image_palette"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView_uploaded"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
         android:contentDescription="@string/image_palette"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/button_choose_image"
@@ -50,13 +52,13 @@
         android:id="@+id/button_save_image_palette"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:text="@string/button_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_cancel_image_palette" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -71,7 +73,7 @@
         <ImageView
             android:id="@+id/color1_image"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
             tools:ignore="ContentDescription" />
@@ -79,7 +81,7 @@
         <ImageView
             android:id="@+id/color2_image"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
             tools:ignore="ContentDescription" />
@@ -87,7 +89,7 @@
         <ImageView
             android:id="@+id/color3_image"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
             tools:ignore="ContentDescription" />
@@ -95,7 +97,7 @@
         <ImageView
             android:id="@+id/color4_image"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
             tools:ignore="ContentDescription" />
@@ -103,7 +105,7 @@
         <ImageView
             android:id="@+id/color5_image"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_launcher_foreground"
             tools:ignore="ContentDescription" />
@@ -111,13 +113,11 @@
 
     <Button
         android:id="@+id/button_cancel_image_palette"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/button_cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_save_image_palette"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,6 +44,7 @@ public class FragmentGenerate extends Fragment {
 
     private Button button_random;
     private Button button_image;
+    private Button button_scratch;
 
     private static final String api_url="http://colormind.io/api/";
     private static AsyncHttpClient client = new AsyncHttpClient();
@@ -59,12 +60,21 @@ public class FragmentGenerate extends Fragment {
         color4 = view.findViewById(R.id.color4_generate);
         color5 = view.findViewById(R.id.color5_generate);
         button_random = view.findViewById(R.id.button_random);
+        button_scratch = view.findViewById(R.id.button_scratch);
         button_image = view.findViewById(R.id.button_image);
 
         button_random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 generatePalette(v);
+            }
+        });
+
+        button_scratch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ScratchActivity.class);
+                startActivityForResult(intent, 1);
             }
         });
 

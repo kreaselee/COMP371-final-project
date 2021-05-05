@@ -54,7 +54,6 @@ public class FragmentExplore extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 int count = 0;
-                // String name;
 
                 for (DataSnapshot item_snapshot:dataSnapshot.getChildren()) {
                     // Log.d("item id ", item_snapshot.getKey());

@@ -94,142 +94,9 @@ public class FragmentGenerate extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         generatePalette(view);
-
-        /*
-        // add header to client
-        client.addHeader("Accept", "application/json");
-        RequestParams params = new RequestParams();
-        params.put("model", "default");
-
-        JSONObject jsonParams = new JSONObject();
-        try {
-            jsonParams.put("model", "default");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        StringEntity entity = null;
-        try {
-            entity = new StringEntity(jsonParams.toString());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        client.post(getContext(), api_url, entity, "application/json", new AsyncHttpResponseHandler() {
-
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.d("api response", new String(responseBody));
-
-                int width = color1.getWidth();
-                int height = color1.getHeight();
-                Log.d("info", Integer.toString(height));
-
-                ArrayList<ImageView> views = new ArrayList<>();
-                views.add(color1);
-                views.add(color2);
-                views.add(color3);
-                views.add(color4);
-                views.add(color5);
-
-                try {
-                    JSONObject json = new JSONObject(new String(responseBody));
-                    JSONArray result = json.getJSONArray("result");
-
-                    for (int i = 0; i < result.length(); i++) {
-                        Bitmap bitmap;
-                        Canvas canvas;
-
-                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                        views.get(i).setImageBitmap(bitmap);
-                        canvas = new Canvas(bitmap);
-
-                        JSONArray values = result.getJSONArray(i);
-                        int r = values.getInt(0);
-                        int g = values.getInt(1);
-                        int b = values.getInt(2);
-                        Paint paint = new Paint();
-                        paint.setColor(Color.rgb(r, g, b));
-
-                        int left = 0;
-                        int top = 0;
-                        int right = bitmap.getWidth();
-                        int bottom = bitmap.getHeight();
-
-                        Rect rect = new Rect(left, top, right, bottom);
-                        canvas.drawRect(rect, paint);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
-
-         */
     }
 
     public void generatePalette(View view) {
-
-        /*
-        Paint pA = new Paint();
-        int vA = R.color.purple_200;
-        pA.setColor(0xffa500);
-
-        Paint pB = new Paint();
-        int vB = R.color.purple_500;
-        pB.setColor(Color.rgb(255, 165, 0));
-
-        Paint pC = new Paint();
-        int vC = R.color.purple_700;
-        pC.setColor(ResourcesCompat.getColor(getResources(), vC, null));
-
-        Paint pD = new Paint();
-        int vD = R.color.teal_200;
-        pD.setColor(ResourcesCompat.getColor(getResources(), vD, null));
-
-        Paint pE = new Paint();
-        int vE = R.color.teal_700;
-        pE.setColor(ResourcesCompat.getColor(getResources(), vE, null));
-
-        ArrayList<Paint> paints = new ArrayList<>();
-        paints.add(pA);
-        paints.add(pB);
-        paints.add(pC);
-        paints.add(pD);
-        paints.add(pE);
-
-        int width = imageView.getWidth();
-        int height = imageView.getHeight();
-        int sectionWidth = width / 5;
-
-        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        imageView.setImageBitmap(bitmap);
-        canvas = new Canvas(bitmap);
-
-        for (int i = 0; i < paints.size(); i++) {
-
-            int left = sectionWidth*i;
-            int top = 0;
-            int right = sectionWidth*(i+1);
-            int bottom = height;
-
-            // int color = paletteRand.get(i);
-
-            // Paint paint = new Paint();
-            // paint.setColor(color);
-
-            Rect rect = new Rect(left, top, right, bottom);
-            canvas.drawRect(rect, paints.get(i));
-        }
-        */
-
 
         // add header to client
         client.addHeader("Accept", "application/json");
@@ -275,12 +142,9 @@ public class FragmentGenerate extends Fragment {
                     // Log.i("values", result.get(0).toString());
 
                     for (int i = 0; i < result.length(); i++) {
-                        Bitmap bitmap;
-                        Canvas canvas;
-
-                        bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+                        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
                         views.get(i).setImageBitmap(bitmap);
-                        canvas = new Canvas(bitmap);
+                        Canvas canvas = new Canvas(bitmap);
 
                         JSONArray values = result.getJSONArray(i);
                         int r = values.getInt(0);

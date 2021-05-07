@@ -65,27 +65,13 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
         views.add(holder.color5);
 
         for (int i = 0; i < colors.size(); i++) {
-            Bitmap bitmap;
-            Canvas canvas;
-
-            bitmap = Bitmap.createBitmap(sectionWidth, height, Bitmap.Config.ARGB_8888);
-            views.get(i).setImageBitmap(bitmap);
-            canvas = new Canvas(bitmap);
 
             ArrayList<Integer> values = colors.get(i);
             int r = values.get(0);
             int g = values.get(1);
             int b = values.get(2);
-            Paint paint = new Paint();
-            paint.setColor(Color.rgb(r, g, b));
 
-            int left = 0;
-            int top = 0;
-            int right = bitmap.getWidth();
-            int bottom = bitmap.getHeight();
-
-            Rect rect = new Rect(left, top, right, bottom);
-            canvas.drawRect(rect, paint);
+            views.get(i).setBackgroundColor(Color.rgb(r, g, b));
         }
     }
 

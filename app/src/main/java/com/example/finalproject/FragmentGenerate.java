@@ -74,7 +74,7 @@ public class FragmentGenerate extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ScratchActivity.class);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
 
@@ -82,7 +82,7 @@ public class FragmentGenerate extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ImageActivity.class);
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
 

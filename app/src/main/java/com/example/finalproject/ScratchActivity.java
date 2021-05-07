@@ -89,10 +89,6 @@ public class ScratchActivity extends AppCompatActivity {
                         switch (viewId) {
                             case R.id.color1_scratch:
                                 currentView = color1;
-                                ArrayList<Integer> rgbValues = getColorValues(currentView);
-                                seekBarR.setProgress(rgbValues.get(0));
-                                seekBarG.setProgress(rgbValues.get(1));
-                                seekBarB.setProgress(rgbValues.get(2));
                                 break;
                             case R.id.color2_scratch:
                                 currentView = color2;
@@ -116,9 +112,9 @@ public class ScratchActivity extends AppCompatActivity {
         color4.setOnClickListener(colorClickListener);
         color5.setOnClickListener(colorClickListener);
 
-        SeekBar seekBarR = findViewById(R.id.seekBarR);
-        SeekBar seekBarG = findViewById(R.id.seekBarG);
-        SeekBar seekBarB = findViewById(R.id.seekBarB);
+        seekBarR = findViewById(R.id.seekBarR);
+        seekBarG = findViewById(R.id.seekBarG);
+        seekBarB = findViewById(R.id.seekBarB);
 
         final SeekBar.OnSeekBarChangeListener seekBarChangeListener =
                 new SeekBar.OnSeekBarChangeListener() {
@@ -138,6 +134,8 @@ public class ScratchActivity extends AppCompatActivity {
                         }
                         currentColor = Color.rgb(redValue, greenValue, blueValue);
 
+                        currentView.setBackgroundColor(currentColor);
+                        /*
                         int width = currentView.getWidth();
                         int height = currentView.getHeight();
 
@@ -155,6 +153,8 @@ public class ScratchActivity extends AppCompatActivity {
 
                         Rect rect = new Rect(left, top, right, bottom);
                         canvas.drawRect(rect, paint);
+
+                         */
                     }
 
                     @Override
@@ -228,9 +228,12 @@ public class ScratchActivity extends AppCompatActivity {
                     // Log.i("values", result.get(0).toString());
 
                     for (int i = 0; i < result.length(); i++) {
-                        Bitmap bitmap = Bitmap.createBitmap(sectionWidth, height, Bitmap.Config.ARGB_8888);
+                        /*
+                        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
                         views.get(i).setImageBitmap(bitmap);
                         Canvas canvas = new Canvas(bitmap);
+
+                         */
 
                         JSONArray values = result.getJSONArray(i);
                         int r = values.getInt(0);
@@ -239,18 +242,18 @@ public class ScratchActivity extends AppCompatActivity {
                         Paint paint = new Paint();
                         paint.setColor(Color.rgb(r, g, b));
 
+                        views.get(i).setBackgroundColor(Color.rgb(r, g, b));
+
+                        /*
                         int left = 0;
                         int top = 0;
                         int right = bitmap.getWidth();
                         int bottom = bitmap.getHeight();
 
-                        // int color = paletteRand.get(i);
-
-                        // Paint paint = new Paint();
-                        // paint.setColor(color);
 
                         Rect rect = new Rect(left, top, right, bottom);
                         canvas.drawRect(rect, paint);
+                        */
                     }
 
                     // Log.i("palette", palette.toString());

@@ -109,23 +109,7 @@ public class ImageActivity extends AppCompatActivity {
             int height = color1.getHeight();
 
             for (int i = 0; i < colors.size(); i++) {
-                Bitmap bitmap;
-                Canvas canvas;
-
-                bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                views.get(i).setImageBitmap(bitmap);
-                canvas = new Canvas(bitmap);
-
-                Paint paint = new Paint();
-                paint.setColor(colors.get(i));
-
-                int left = 0;
-                int top = 0;
-                int right = bitmap.getWidth();
-                int bottom = bitmap.getHeight();
-
-                Rect rect = new Rect(left, top, right, bottom);
-                canvas.drawRect(rect, paint);
+                views.get(i).setBackgroundColor(colors.get(i));
             }
         }
     }

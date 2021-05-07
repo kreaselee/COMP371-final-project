@@ -48,13 +48,7 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Palette palette = palettes.get(position);
-
         holder.textView_name.setText(palette.getName());
-
-        int width = viewWidth;
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        int height = Math.round(200 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-        int sectionWidth = width / palette.getColors().size();
 
         ArrayList<ArrayList<Integer>> colors = palette.getColors();
         ArrayList<ImageView> views = new ArrayList<>();

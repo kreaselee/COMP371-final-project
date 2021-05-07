@@ -33,40 +33,35 @@
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription"/>
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color2_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription"/>
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color3_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription"/>
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color4_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription"/>
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color5_saved"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_launcher_foreground"
-            tools:ignore="ContentDescription"/>
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <LinearLayout

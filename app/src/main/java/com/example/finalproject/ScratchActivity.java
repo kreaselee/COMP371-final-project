@@ -1,18 +1,23 @@
 package com.example.finalproject;
 
+import android.animation.ArgbEvaluator;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
@@ -36,6 +41,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Random;
 
 import codes.side.andcolorpicker.model.IntegerHSLColor;
 import cz.msebera.android.httpclient.Header;
@@ -52,6 +58,12 @@ public class ScratchActivity extends AppCompatActivity {
     private ImageView color5;
     private ImageView currentView;
     private int currentColor;
+    private ArrayList<Integer> currentColorRGB;
+
+    private EditText editTextHex;
+    private EditText editTextR;
+    private EditText editTextG;
+    private EditText editTextB;
 
     private SeekBar seekBarR;
     private SeekBar seekBarB;
@@ -65,6 +77,7 @@ public class ScratchActivity extends AppCompatActivity {
     private static final String api_url="http://colormind.io/api/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +94,29 @@ public class ScratchActivity extends AppCompatActivity {
         setDefaultColors();
         currentView = color1;
 
+        editTextHex = findViewById(R.id.editTextHex);
+
+        editTextHex.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        editTextR = findViewById(R.id.editTextR);
+        editTextG = findViewById(R.id.editTextG);
+        editTextB = findViewById(R.id.editTextB);
+
         final View.OnClickListener colorClickListener =
                 new View.OnClickListener() {
                     @Override
@@ -88,19 +124,19 @@ public class ScratchActivity extends AppCompatActivity {
                         int viewId = v.getId();
                         switch (viewId) {
                             case R.id.color1_scratch:
-                                currentView = color1;
+                                selectView(color1);
                                 break;
                             case R.id.color2_scratch:
-                                currentView = color2;
+                                selectView(color2);
                                 break;
                             case R.id.color3_scratch:
-                                currentView = color3;
+                                selectView(color3);
                                 break;
                             case R.id.color4_scratch:
-                                currentView = color4;
+                                selectView(color4);
                                 break;
                             case R.id.color5_scratch:
-                                currentView = color5;
+                                selectView(color5);
                                 break;
                         }
                     }
@@ -116,6 +152,27 @@ public class ScratchActivity extends AppCompatActivity {
         seekBarG = findViewById(R.id.seekBarG);
         seekBarB = findViewById(R.id.seekBarB);
 
+        currentColorRGB = getColorValues(currentView);
+        int valR = currentColorRGB.get(0);
+        int valG = currentColorRGB.get(1);
+        int valB = currentColorRGB.get(2);
+        // Log.d("rgb", currentColorRGB.toString());
+
+        String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();
+        editTextHex.setText(hex);
+
+        redValue = valR;
+        greenValue = valG;
+        blueValue = valB;
+
+        seekBarR.setProgress(valR);
+        seekBarG.setProgress(valG);
+        seekBarB.setProgress(valB);
+
+        editTextR.setText(Integer.toString(valR));
+        editTextG.setText(Integer.toString(valG));
+        editTextB.setText(Integer.toString(valB));
+
         final SeekBar.OnSeekBarChangeListener seekBarChangeListener =
                 new SeekBar.OnSeekBarChangeListener() {
                     @Override
@@ -124,37 +181,22 @@ public class ScratchActivity extends AppCompatActivity {
                         switch (viewId) {
                             case R.id.seekBarR:
                                 redValue = progress;
+                                editTextR.setText(Integer.toString(progress));
                                 break;
                             case R.id.seekBarG:
                                 greenValue = progress;
+                                editTextG.setText(Integer.toString(progress));
                                 break;
                             case R.id.seekBarB:
                                 blueValue = progress;
+                                editTextB.setText(Integer.toString(progress));
                                 break;
                         }
                         currentColor = Color.rgb(redValue, greenValue, blueValue);
-
                         currentView.setBackgroundColor(currentColor);
-                        /*
-                        int width = currentView.getWidth();
-                        int height = currentView.getHeight();
 
-                        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                        currentView.setImageBitmap(bitmap);
-                        Canvas canvas = new Canvas(bitmap);
-
-                        int left = 0;
-                        int top = 0;
-                        int right = bitmap.getWidth();
-                        int bottom = bitmap.getHeight();
-
-                        Paint paint = new Paint();
-                        paint.setColor(currentColor);
-
-                        Rect rect = new Rect(left, top, right, bottom);
-                        canvas.drawRect(rect, paint);
-
-                         */
+                        String hex = String.format("%02x%02x%02x", redValue, greenValue, blueValue).toUpperCase();
+                        editTextHex.setText(hex);
                     }
 
                     @Override
@@ -183,103 +225,30 @@ public class ScratchActivity extends AppCompatActivity {
     }
 
     public void setDefaultColors() {
-        // add header to client
-        client.addHeader("Accept", "application/json");
-        RequestParams params = new RequestParams();
-        params.put("model", "default");
+        Random rnd = new Random();
+        int c1 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        int c5 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        Log.d("color", new ArgbEvaluator().evaluate(25, c1, c5).toString());
+        int c2 = (Integer) new ArgbEvaluator().evaluate((float)1/4, c1, c5);
+        int c3 = (Integer) new ArgbEvaluator().evaluate((float)2/4, c1, c5);
+        int c4 = (Integer) new ArgbEvaluator().evaluate((float)3/4, c1, c5);
 
-        JSONObject jsonParams = new JSONObject();
-        try {
-            jsonParams.put("model", "default");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        StringEntity entity = null;
-        try {
-            entity = new StringEntity(jsonParams.toString());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        client.post(this, api_url, entity, "application/json", new AsyncHttpResponseHandler() {
-
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.d("api response", new String(responseBody));
-
-                int width = scratchLayout.getWidth();
-                DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-                int height = Math.round(200 * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
-                Log.d("info", Integer.toString(height));
-                int sectionWidth = width / 5;
-
-                ArrayList<ImageView> views = new ArrayList<>();
-                views.add(color1);
-                views.add(color2);
-                views.add(color3);
-                views.add(color4);
-                views.add(color5);
-
-                try {
-                    JSONObject json = new JSONObject(new String(responseBody));
-                    JSONArray result = json.getJSONArray("result");
-
-                    // Log.i("values", result.get(0).toString());
-
-                    for (int i = 0; i < result.length(); i++) {
-                        /*
-                        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                        views.get(i).setImageBitmap(bitmap);
-                        Canvas canvas = new Canvas(bitmap);
-
-                         */
-
-                        JSONArray values = result.getJSONArray(i);
-                        int r = values.getInt(0);
-                        int g = values.getInt(1);
-                        int b = values.getInt(2);
-                        Paint paint = new Paint();
-                        paint.setColor(Color.rgb(r, g, b));
-
-                        views.get(i).setBackgroundColor(Color.rgb(r, g, b));
-
-                        /*
-                        int left = 0;
-                        int top = 0;
-                        int right = bitmap.getWidth();
-                        int bottom = bitmap.getHeight();
-
-
-                        Rect rect = new Rect(left, top, right, bottom);
-                        canvas.drawRect(rect, paint);
-                        */
-                    }
-
-                    // Log.i("palette", palette.toString());
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
+        color1.setBackgroundColor(c1);
+        color2.setBackgroundColor(c2);
+        color3.setBackgroundColor(c3);
+        color4.setBackgroundColor(c4);
+        color5.setBackgroundColor(c5);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList<Integer> getColorValues(ImageView view) {
 
-        int x = view.getWidth()/2;
-        int y = view.getHeight()/2;
-        int pixel = view.getDrawingCache().getPixel(x,y);
+        ColorDrawable drawable = (ColorDrawable) view.getBackground();
+        int color = drawable.getColor();
 
-        int red = Color.red(pixel);
-        int green = Color.green(pixel);
-        int blue = Color.blue(pixel);
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
 
         ArrayList<Integer> rgbValues = new ArrayList<>();
         rgbValues.add(red);
@@ -288,5 +257,20 @@ public class ScratchActivity extends AppCompatActivity {
 
         // ArrayList<Integer> rgbValues = new ArrayList<>();
         return rgbValues;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void selectView(ImageView view) {
+        currentView = view;
+        currentColorRGB = getColorValues(currentView);
+        Log.d("rgb", currentColorRGB.toString());
+
+        seekBarR.setProgress(currentColorRGB.get(0));
+        seekBarG.setProgress(currentColorRGB.get(1));
+        seekBarB.setProgress(currentColorRGB.get(2));
+
+        editTextR.setText(currentColorRGB.get(0).toString());
+        editTextG.setText(currentColorRGB.get(1).toString());
+        editTextB.setText(currentColorRGB.get(2).toString());
     }
 }

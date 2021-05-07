@@ -115,7 +115,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/editTextHex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/hex"
@@ -137,7 +137,7 @@
                 android:text="@string/r" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/editTextR"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/rgb_val"
@@ -152,7 +152,7 @@
                 android:text="@string/g" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/editTextG"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/rgb_val"
@@ -167,7 +167,7 @@
                 android:text="@string/b" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
+                android:id="@+id/editTextB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/rgb_val"

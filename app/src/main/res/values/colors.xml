@@ -15,4 +15,9 @@
     <color name="grey2_light">#ffffff</color>
     <color name="grey2_mid">#eeeeee</color>
     <color name="grey2_dark">#bcbcbc</color>
+
+    <color name="seek_bar_background">#ababab</color>
+    <color name="seek_bar_r_progress">#CC0000</color>
+    <color name="seek_bar_g_progress">#05A500</color>
+    <color name="seek_bar_b_progress">#0071D5</color>
 </resources>

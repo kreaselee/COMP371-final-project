@@ -28,7 +28,7 @@
     <string name="tab_hex">HEX</string>
     <string name="pound">#</string>
     <string name="hex">FFFFFF</string>
-    <string name="rgb">RGB:</string>
+    <string name="rgb">RGB</string>
     <string name="r">R</string>
     <string name="g">G</string>
     <string name="b">B</string>

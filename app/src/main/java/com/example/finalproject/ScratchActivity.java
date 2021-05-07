@@ -89,6 +89,10 @@ public class ScratchActivity extends AppCompatActivity {
                         switch (viewId) {
                             case R.id.color1_scratch:
                                 currentView = color1;
+                                ArrayList<Integer> rgbValues = getColorValues(currentView);
+                                seekBarR.setProgress(rgbValues.get(0));
+                                seekBarG.setProgress(rgbValues.get(1));
+                                seekBarB.setProgress(rgbValues.get(2));
                                 break;
                             case R.id.color2_scratch:
                                 currentView = color2;
@@ -115,11 +119,6 @@ public class ScratchActivity extends AppCompatActivity {
         SeekBar seekBarR = findViewById(R.id.seekBarR);
         SeekBar seekBarG = findViewById(R.id.seekBarG);
         SeekBar seekBarB = findViewById(R.id.seekBarB);
-
-        ArrayList<Integer> rgbValues = getColorValues(currentView);
-        seekBarR.setProgress(rgbValues.get(0));
-        seekBarG.setProgress(rgbValues.get(1));
-        seekBarB.setProgress(rgbValues.get(2));
 
         final SeekBar.OnSeekBarChangeListener seekBarChangeListener =
                 new SeekBar.OnSeekBarChangeListener() {
@@ -270,11 +269,10 @@ public class ScratchActivity extends AppCompatActivity {
     }
 
     public ArrayList<Integer> getColorValues(ImageView view) {
-        /*
-        Bitmap bitmap = ((BitmapDrawable) view.getDrawable()).getBitmap();
-        int x = bitmap.getWidth()/2;
-        int y = bitmap.getHeight()/2;
-        int pixel = bitmap.getPixel(x,y);
+
+        int x = view.getWidth()/2;
+        int y = view.getHeight()/2;
+        int pixel = view.getDrawingCache().getPixel(x,y);
 
         int red = Color.red(pixel);
         int green = Color.green(pixel);
@@ -285,8 +283,7 @@ public class ScratchActivity extends AppCompatActivity {
         rgbValues.add(green);
         rgbValues.add(blue);
 
-         */
-        ArrayList<Integer> rgbValues = new ArrayList<>();
+        // ArrayList<Integer> rgbValues = new ArrayList<>();
         return rgbValues;
     }
 }

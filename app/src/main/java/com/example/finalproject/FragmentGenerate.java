@@ -142,9 +142,12 @@ public class FragmentGenerate extends Fragment {
                     // Log.i("values", result.get(0).toString());
 
                     for (int i = 0; i < result.length(); i++) {
+                        /*
                         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
                         views.get(i).setImageBitmap(bitmap);
                         Canvas canvas = new Canvas(bitmap);
+
+                         */
 
                         JSONArray values = result.getJSONArray(i);
                         int r = values.getInt(0);
@@ -153,18 +156,19 @@ public class FragmentGenerate extends Fragment {
                         Paint paint = new Paint();
                         paint.setColor(Color.rgb(r, g, b));
 
+                        views.get(i).setBackgroundColor(Color.rgb(r, g, b));
+
+                        /*
                         int left = 0;
                         int top = 0;
                         int right = bitmap.getWidth();
                         int bottom = bitmap.getHeight();
 
-                        // int color = paletteRand.get(i);
-
-                        // Paint paint = new Paint();
-                        // paint.setColor(color);
 
                         Rect rect = new Rect(left, top, right, bottom);
                         canvas.drawRect(rect, paint);
+                        */
+
                     }
 
                     // Log.i("palette", palette.toString());

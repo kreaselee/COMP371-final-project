@@ -105,9 +105,6 @@ public class ImageActivity extends AppCompatActivity {
             colors.add(palette.getMutedColor(14474460));
             colors.add(palette.getLightMutedColor(16316664));
 
-            int width = color1.getWidth();
-            int height = color1.getHeight();
-
             for (int i = 0; i < colors.size(); i++) {
                 views.get(i).setBackgroundColor(colors.get(i));
             }

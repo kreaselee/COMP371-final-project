@@ -27,10 +27,17 @@
     <string name="scratch_palette">Create Palette</string>
     <string name="tab_hex">HEX</string>
     <string name="pound">#</string>
+    <string name="hex_label">Enter Hex Code</string>
     <string name="hex">FFFFFF</string>
     <string name="rgb">RGB</string>
     <string name="r">R</string>
     <string name="g">G</string>
     <string name="b">B</string>
     <string name="rgb_val">255</string>
+
+    <string name="HSL">HSL</string>
+    <string name="h">H</string>
+    <string name="s">S</string>
+    <string name="l">L</string>
+
 </resources>

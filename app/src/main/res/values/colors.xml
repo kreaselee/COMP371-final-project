@@ -20,4 +20,6 @@
     <color name="seek_bar_r_progress">#CC0000</color>
     <color name="seek_bar_g_progress">#05A500</color>
     <color name="seek_bar_b_progress">#0071D5</color>
+
+    <color name="seek_bar_misc_progress">#636363</color>
 </resources>

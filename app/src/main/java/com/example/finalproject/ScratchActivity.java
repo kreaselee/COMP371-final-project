@@ -32,6 +32,7 @@ public class ScratchActivity extends AppCompatActivity {
     private ImageView color3;
     private ImageView color4;
     private ImageView color5;
+    private ImageView displayColor;
     private ImageView currentView;
     private int currentColor;
     private ArrayList<Integer> currentColorRGB;
@@ -41,6 +42,8 @@ public class ScratchActivity extends AppCompatActivity {
     private TextView textViewGVal;
     private TextView textViewBVal;
 
+    private EditText editTextHex;
+
     private SeekBar seekBarR;
     private SeekBar seekBarB;
     private SeekBar seekBarG;
@@ -49,9 +52,6 @@ public class ScratchActivity extends AppCompatActivity {
     private int blueValue = 0;
 
     private Button button_cancel;
-
-    private static final String api_url="http://colormind.io/api/";
-    private static AsyncHttpClient client = new AsyncHttpClient();
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -66,15 +66,28 @@ public class ScratchActivity extends AppCompatActivity {
         color3 = findViewById(R.id.color3_scratch);
         color4 = findViewById(R.id.color4_scratch);
         color5 = findViewById(R.id.color5_scratch);
+        displayColor = findViewById(R.id.currentColor_scratch);
 
         setDefaultColors();
         currentView = color1;
 
         textViewHexVal = findViewById(R.id.textViewHex_value);
-
         textViewRVal = findViewById(R.id.textViewR_value);
         textViewGVal = findViewById(R.id.textViewG_value);
         textViewBVal = findViewById(R.id.textViewB_value);
+
+        /*
+        editTextHex = findViewById(R.id.editTextHex);
+
+        if (editTextHex.getText().length() == 6) {
+            int r = Integer.valueOf(editTextHex.getText().toString().substring(0,2), 16 );
+            int g = Integer.valueOf(editTextHex.getText().toString().substring(2,4), 16 );
+            int b = Integer.valueOf(editTextHex.getText().toString().substring(4,6), 16 );
+
+            currentView.setBackgroundColor(Color.rgb(r, g, b));
+        }
+
+         */
 
         final View.OnClickListener colorClickListener =
                 new View.OnClickListener() {
@@ -111,7 +124,7 @@ public class ScratchActivity extends AppCompatActivity {
         seekBarG = findViewById(R.id.seekBarG);
         seekBarB = findViewById(R.id.seekBarB);
 
-        currentColorRGB = getColorValues(currentView);
+        currentColorRGB = getRGBValues(currentView);
         int valR = currentColorRGB.get(0);
         int valG = currentColorRGB.get(1);
         int valB = currentColorRGB.get(2);
@@ -119,6 +132,8 @@ public class ScratchActivity extends AppCompatActivity {
 
         String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();
         textViewHexVal.setText(hex);
+
+        displayColor.setBackgroundColor(Color.rgb(valR, valG, valB));
 
         redValue = valR;
         greenValue = valG;
@@ -153,6 +168,7 @@ public class ScratchActivity extends AppCompatActivity {
                         }
                         currentColor = Color.rgb(redValue, greenValue, blueValue);
                         currentView.setBackgroundColor(currentColor);
+                        displayColor.setBackgroundColor(currentColor);
 
                         String hex = String.format("%02x%02x%02x", redValue, greenValue, blueValue).toUpperCase();
                         textViewHexVal.setText(hex);
@@ -197,10 +213,11 @@ public class ScratchActivity extends AppCompatActivity {
         color3.setBackgroundColor(c3);
         color4.setBackgroundColor(c4);
         color5.setBackgroundColor(c5);
+        displayColor.setBackgroundColor(c1);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList<Integer> getColorValues(ImageView view) {
+    public ArrayList<Integer> getRGBValues(ImageView view) {
 
         ColorDrawable drawable = (ColorDrawable) view.getBackground();
         int color = drawable.getColor();
@@ -221,15 +238,21 @@ public class ScratchActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectView(ImageView view) {
         currentView = view;
-        currentColorRGB = getColorValues(currentView);
+        currentColorRGB = getRGBValues(currentView);
         Log.d("rgb", currentColorRGB.toString());
 
-        seekBarR.setProgress(currentColorRGB.get(0));
-        seekBarG.setProgress(currentColorRGB.get(1));
-        seekBarB.setProgress(currentColorRGB.get(2));
+        int valR = currentColorRGB.get(0);
+        int valG = currentColorRGB.get(1);
+        int valB = currentColorRGB.get(2);
 
-        textViewRVal.setText(currentColorRGB.get(0).toString());
-        textViewGVal.setText(currentColorRGB.get(1).toString());
-        textViewBVal.setText(currentColorRGB.get(2).toString());
+        displayColor.setBackgroundColor(Color.rgb(valR, valG, valB));
+
+        seekBarR.setProgress(valR);
+        seekBarG.setProgress(valG);
+        seekBarB.setProgress(valB);
+
+        textViewRVal.setText(Integer.toString(valR));
+        textViewGVal.setText(Integer.toString(valG));
+        textViewBVal.setText(Integer.toString(valB));
     }
 }

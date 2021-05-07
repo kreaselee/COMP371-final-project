@@ -1,51 +1,27 @@
 package com.example.finalproject;
 
 import android.animation.ArgbEvaluator;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.tabs.TabLayout;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-
-import codes.side.andcolorpicker.model.IntegerHSLColor;
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class ScratchActivity extends AppCompatActivity {
 
@@ -60,10 +36,10 @@ public class ScratchActivity extends AppCompatActivity {
     private int currentColor;
     private ArrayList<Integer> currentColorRGB;
 
-    private EditText editTextHex;
-    private EditText editTextR;
-    private EditText editTextG;
-    private EditText editTextB;
+    private TextView textViewHexVal;
+    private TextView textViewRVal;
+    private TextView textViewGVal;
+    private TextView textViewBVal;
 
     private SeekBar seekBarR;
     private SeekBar seekBarB;
@@ -94,28 +70,11 @@ public class ScratchActivity extends AppCompatActivity {
         setDefaultColors();
         currentView = color1;
 
-        editTextHex = findViewById(R.id.editTextHex);
+        textViewHexVal = findViewById(R.id.textViewHex_value);
 
-        editTextHex.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-        editTextR = findViewById(R.id.editTextR);
-        editTextG = findViewById(R.id.editTextG);
-        editTextB = findViewById(R.id.editTextB);
+        textViewRVal = findViewById(R.id.textViewR_value);
+        textViewGVal = findViewById(R.id.textViewG_value);
+        textViewBVal = findViewById(R.id.textViewB_value);
 
         final View.OnClickListener colorClickListener =
                 new View.OnClickListener() {
@@ -159,7 +118,7 @@ public class ScratchActivity extends AppCompatActivity {
         // Log.d("rgb", currentColorRGB.toString());
 
         String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();
-        editTextHex.setText(hex);
+        textViewHexVal.setText(hex);
 
         redValue = valR;
         greenValue = valG;
@@ -169,9 +128,9 @@ public class ScratchActivity extends AppCompatActivity {
         seekBarG.setProgress(valG);
         seekBarB.setProgress(valB);
 
-        editTextR.setText(Integer.toString(valR));
-        editTextG.setText(Integer.toString(valG));
-        editTextB.setText(Integer.toString(valB));
+        textViewRVal.setText(Integer.toString(valR));
+        textViewGVal.setText(Integer.toString(valG));
+        textViewBVal.setText(Integer.toString(valB));
 
         final SeekBar.OnSeekBarChangeListener seekBarChangeListener =
                 new SeekBar.OnSeekBarChangeListener() {
@@ -181,22 +140,22 @@ public class ScratchActivity extends AppCompatActivity {
                         switch (viewId) {
                             case R.id.seekBarR:
                                 redValue = progress;
-                                editTextR.setText(Integer.toString(progress));
+                                textViewRVal.setText(Integer.toString(progress));
                                 break;
                             case R.id.seekBarG:
                                 greenValue = progress;
-                                editTextG.setText(Integer.toString(progress));
+                                textViewGVal.setText(Integer.toString(progress));
                                 break;
                             case R.id.seekBarB:
                                 blueValue = progress;
-                                editTextB.setText(Integer.toString(progress));
+                                textViewBVal.setText(Integer.toString(progress));
                                 break;
                         }
                         currentColor = Color.rgb(redValue, greenValue, blueValue);
                         currentView.setBackgroundColor(currentColor);
 
                         String hex = String.format("%02x%02x%02x", redValue, greenValue, blueValue).toUpperCase();
-                        editTextHex.setText(hex);
+                        textViewHexVal.setText(hex);
                     }
 
                     @Override
@@ -269,8 +228,8 @@ public class ScratchActivity extends AppCompatActivity {
         seekBarG.setProgress(currentColorRGB.get(1));
         seekBarB.setProgress(currentColorRGB.get(2));
 
-        editTextR.setText(currentColorRGB.get(0).toString());
-        editTextG.setText(currentColorRGB.get(1).toString());
-        editTextB.setText(currentColorRGB.get(2).toString());
+        textViewRVal.setText(currentColorRGB.get(0).toString());
+        textViewGVal.setText(currentColorRGB.get(1).toString());
+        textViewBVal.setText(currentColorRGB.get(2).toString());
     }
 }

@@ -156,7 +156,7 @@ public class NameActivity extends AppCompatActivity {
         textView.setText(hex);
     }
 
-    public void writeNewPalette(String name, ArrayList<String> colors) {
+    private void writeNewPalette(String name, ArrayList<String> colors) {
         // Palette user = new Palette(name, colors);
         database.child(key).child("name").setValue(name);
         database.child(key).child("color1").setValue(colors.get(0));

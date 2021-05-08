@@ -21,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -49,6 +51,8 @@ public class FragmentGenerate extends Fragment {
     private static final String api_url="http://colormind.io/api/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
+    private FirebaseDatabase database;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,10 +67,12 @@ public class FragmentGenerate extends Fragment {
         button_scratch = view.findViewById(R.id.button_scratch);
         button_image = view.findViewById(R.id.button_image);
 
+        database = FirebaseDatabase.getInstance();
+
         button_random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generatePalette(v);
+                generatePalette();
             }
         });
 
@@ -92,12 +98,10 @@ public class FragmentGenerate extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        generatePalette(view);
+        generatePalette();
     }
 
-    public void generatePalette(View view) {
-
+    public void generatePalette() {
         // add header to client
         client.addHeader("Accept", "application/json");
         RequestParams params = new RequestParams();
@@ -142,13 +146,6 @@ public class FragmentGenerate extends Fragment {
                     // Log.i("values", result.get(0).toString());
 
                     for (int i = 0; i < result.length(); i++) {
-                        /*
-                        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-                        views.get(i).setImageBitmap(bitmap);
-                        Canvas canvas = new Canvas(bitmap);
-
-                         */
-
                         JSONArray values = result.getJSONArray(i);
                         int r = values.getInt(0);
                         int g = values.getInt(1);
@@ -157,21 +154,7 @@ public class FragmentGenerate extends Fragment {
                         paint.setColor(Color.rgb(r, g, b));
 
                         views.get(i).setBackgroundColor(Color.rgb(r, g, b));
-
-                        /*
-                        int left = 0;
-                        int top = 0;
-                        int right = bitmap.getWidth();
-                        int bottom = bitmap.getHeight();
-
-
-                        Rect rect = new Rect(left, top, right, bottom);
-                        canvas.drawRect(rect, paint);
-                        */
-
                     }
-
-                    // Log.i("palette", palette.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();

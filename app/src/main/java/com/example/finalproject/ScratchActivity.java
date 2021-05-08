@@ -42,8 +42,6 @@ public class ScratchActivity extends AppCompatActivity {
     private TextView textViewGVal;
     private TextView textViewBVal;
 
-    private EditText editTextHex;
-
     private SeekBar seekBarR;
     private SeekBar seekBarB;
     private SeekBar seekBarG;
@@ -59,6 +57,7 @@ public class ScratchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scratch);
 
+        // find views by id
         scratchLayout = findViewById(R.id.scratchLayout);
 
         color1 = findViewById(R.id.color1_scratch);
@@ -68,27 +67,55 @@ public class ScratchActivity extends AppCompatActivity {
         color5 = findViewById(R.id.color5_scratch);
         displayColor = findViewById(R.id.currentColor_scratch);
 
-        setDefaultColors();
-        currentView = color1;
-
         textViewHexVal = findViewById(R.id.textViewHex_value);
         textViewRVal = findViewById(R.id.textViewR_value);
         textViewGVal = findViewById(R.id.textViewG_value);
         textViewBVal = findViewById(R.id.textViewB_value);
 
-        /*
-        editTextHex = findViewById(R.id.editTextHex);
+        seekBarR = findViewById(R.id.seekBarR);
+        seekBarG = findViewById(R.id.seekBarG);
+        seekBarB = findViewById(R.id.seekBarB);
 
-        if (editTextHex.getText().length() == 6) {
-            int r = Integer.valueOf(editTextHex.getText().toString().substring(0,2), 16 );
-            int g = Integer.valueOf(editTextHex.getText().toString().substring(2,4), 16 );
-            int b = Integer.valueOf(editTextHex.getText().toString().substring(4,6), 16 );
+        button_cancel = findViewById(R.id.button_cancel_scratch);
 
-            currentView.setBackgroundColor(Color.rgb(r, g, b));
-        }
+        // when cancel button is clicked, exit activity
+        button_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
-         */
+        // set default colors and select first color imageView
+        setDefaultColors();
+        currentView = color1;
 
+        // get colors of current color imageView (i.e., first view)
+        // set values and colors of the rest of the views accordingly
+        currentColorRGB = getRGBValues(currentView);
+        int valR = currentColorRGB.get(0);
+        int valG = currentColorRGB.get(1);
+        int valB = currentColorRGB.get(2);
+
+        redValue = valR;
+        greenValue = valG;
+        blueValue = valB;
+
+        // set hex value
+        String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();
+        textViewHexVal.setText(hex);
+
+        // set seekBar progress values
+        seekBarR.setProgress(valR);
+        seekBarG.setProgress(valG);
+        seekBarB.setProgress(valB);
+
+        // set RGB values
+        textViewRVal.setText(Integer.toString(valR));
+        textViewGVal.setText(Integer.toString(valG));
+        textViewBVal.setText(Integer.toString(valB));
+
+        // when imageView is clicked on, set it be the current color imageView
         final View.OnClickListener colorClickListener =
                 new View.OnClickListener() {
                     @Override
@@ -120,33 +147,7 @@ public class ScratchActivity extends AppCompatActivity {
         color4.setOnClickListener(colorClickListener);
         color5.setOnClickListener(colorClickListener);
 
-        seekBarR = findViewById(R.id.seekBarR);
-        seekBarG = findViewById(R.id.seekBarG);
-        seekBarB = findViewById(R.id.seekBarB);
-
-        currentColorRGB = getRGBValues(currentView);
-        int valR = currentColorRGB.get(0);
-        int valG = currentColorRGB.get(1);
-        int valB = currentColorRGB.get(2);
-        // Log.d("rgb", currentColorRGB.toString());
-
-        String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();
-        textViewHexVal.setText(hex);
-
-        displayColor.setBackgroundColor(Color.rgb(valR, valG, valB));
-
-        redValue = valR;
-        greenValue = valG;
-        blueValue = valB;
-
-        seekBarR.setProgress(valR);
-        seekBarG.setProgress(valG);
-        seekBarB.setProgress(valB);
-
-        textViewRVal.setText(Integer.toString(valR));
-        textViewGVal.setText(Integer.toString(valG));
-        textViewBVal.setText(Integer.toString(valB));
-
+        // change color and view values according the seekBar changes
         final SeekBar.OnSeekBarChangeListener seekBarChangeListener =
                 new SeekBar.OnSeekBarChangeListener() {
                     @Override
@@ -188,69 +189,76 @@ public class ScratchActivity extends AppCompatActivity {
         seekBarR.setOnSeekBarChangeListener(seekBarChangeListener);
         seekBarG.setOnSeekBarChangeListener(seekBarChangeListener);
         seekBarB.setOnSeekBarChangeListener(seekBarChangeListener);
-
-        button_cancel = findViewById(R.id.button_cancel_scratch);
-
-        button_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     public void setDefaultColors() {
+        // create random palette to set as the default
         Random rnd = new Random();
+        // get two random colors and set as first and last colors
         int c1 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         int c5 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        Log.d("color", new ArgbEvaluator().evaluate(25, c1, c5).toString());
+        // get colors in between two end colors
         int c2 = (Integer) new ArgbEvaluator().evaluate((float)1/4, c1, c5);
         int c3 = (Integer) new ArgbEvaluator().evaluate((float)2/4, c1, c5);
         int c4 = (Integer) new ArgbEvaluator().evaluate((float)3/4, c1, c5);
 
+        // set color imageViews accordingly
         color1.setBackgroundColor(c1);
         color2.setBackgroundColor(c2);
         color3.setBackgroundColor(c3);
         color4.setBackgroundColor(c4);
         color5.setBackgroundColor(c5);
+        // display the color of the current color imageView
         displayColor.setBackgroundColor(c1);
     }
 
+    // method to get rgb values
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList<Integer> getRGBValues(ImageView view) {
-
+        // get color of color imageView
         ColorDrawable drawable = (ColorDrawable) view.getBackground();
         int color = drawable.getColor();
 
+        // get rgb values of the color
         int red = Color.red(color);
         int green = Color.green(color);
         int blue = Color.blue(color);
 
+        // add to arrayList and return arrayList
         ArrayList<Integer> rgbValues = new ArrayList<>();
         rgbValues.add(red);
         rgbValues.add(green);
         rgbValues.add(blue);
 
-        // ArrayList<Integer> rgbValues = new ArrayList<>();
         return rgbValues;
     }
 
+    // method to select color imageView
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectView(ImageView view) {
+        // set color imageView to current view
         currentView = view;
-        currentColorRGB = getRGBValues(currentView);
-        Log.d("rgb", currentColorRGB.toString());
 
+        currentColorRGB = getRGBValues(currentView);
+
+        // get rgb values of the color of color imageView
         int valR = currentColorRGB.get(0);
         int valG = currentColorRGB.get(1);
         int valB = currentColorRGB.get(2);
 
+        // set hex value
+        String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();
+        textViewHexVal.setText(hex);
+
+        // display the color of the current color imageView
         displayColor.setBackgroundColor(Color.rgb(valR, valG, valB));
 
+        // set seekBar progress values
         seekBarR.setProgress(valR);
         seekBarG.setProgress(valG);
         seekBarB.setProgress(valB);
 
+        // set rgb values
         textViewRVal.setText(Integer.toString(valR));
         textViewGVal.setText(Integer.toString(valG));
         textViewBVal.setText(Integer.toString(valB));

@@ -65,7 +65,7 @@ public class NameActivity extends AppCompatActivity {
 
         paletteName = findViewById(R.id.editText_name);
 
-        button_back = findViewById(R.id.button_name_back);
+        button_back = findViewById(R.id.button_name_edit);
         button_save = findViewById(R.id.button_name_save);
 
         database = FirebaseDatabase.getInstance().getReference();

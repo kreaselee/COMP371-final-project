@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -7,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +35,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -47,6 +50,7 @@ public class FragmentGenerate extends Fragment {
     private Button button_random;
     private Button button_image;
     private Button button_scratch;
+    private Button button_save;
 
     private static final String api_url="http://colormind.io/api/";
     private static AsyncHttpClient client = new AsyncHttpClient();
@@ -66,6 +70,7 @@ public class FragmentGenerate extends Fragment {
         button_random = view.findViewById(R.id.button_random);
         button_scratch = view.findViewById(R.id.button_scratch);
         button_image = view.findViewById(R.id.button_image);
+        button_save = view.findViewById(R.id.button_generate_save);
 
         database = FirebaseDatabase.getInstance();
 
@@ -88,6 +93,26 @@ public class FragmentGenerate extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ImageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button_save.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                ArrayList<Integer> color1RGB = getRGBValues(color1);
+                ArrayList<Integer> color2RGB = getRGBValues(color2);
+                ArrayList<Integer> color3RGB = getRGBValues(color3);
+                ArrayList<Integer> color4RGB = getRGBValues(color4);
+                ArrayList<Integer> color5RGB = getRGBValues(color5);
+
+                Intent intent = new Intent(getActivity(), NameActivity.class);
+                intent.putExtra("color1RGB", color1RGB);
+                intent.putExtra("color2RGB", color2RGB);
+                intent.putExtra("color3RGB", color3RGB);
+                intent.putExtra("color4RGB", color4RGB);
+                intent.putExtra("color5RGB", color5RGB);
                 startActivity(intent);
             }
         });
@@ -164,9 +189,45 @@ public class FragmentGenerate extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                // create random palette to set as the default
+                Random rnd = new Random();
+                // get two random colors and set as first and last colors
+                int c1 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                int c5 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                // get colors in between two end colors
+                int c2 = (Integer) new ArgbEvaluator().evaluate((float)1/4, c1, c5);
+                int c3 = (Integer) new ArgbEvaluator().evaluate((float)2/4, c1, c5);
+                int c4 = (Integer) new ArgbEvaluator().evaluate((float)3/4, c1, c5);
 
+                // set color imageViews accordingly
+                color1.setBackgroundColor(c1);
+                color2.setBackgroundColor(c2);
+                color3.setBackgroundColor(c3);
+                color4.setBackgroundColor(c4);
+                color5.setBackgroundColor(c5);
             }
         });
 
+    }
+
+    // method to get rgb values
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<Integer> getRGBValues(ImageView view) {
+        // get color of color imageView
+        ColorDrawable drawable = (ColorDrawable) view.getBackground();
+        int color = drawable.getColor();
+
+        // get rgb values of the color
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+
+        // add to arrayList and return arrayList
+        ArrayList<Integer> rgbValues = new ArrayList<>();
+        rgbValues.add(red);
+        rgbValues.add(green);
+        rgbValues.add(blue);
+
+        return rgbValues;
     }
 }

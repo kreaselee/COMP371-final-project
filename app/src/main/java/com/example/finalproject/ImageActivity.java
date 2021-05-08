@@ -7,15 +7,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.palette.graphics.Palette;
 
@@ -37,6 +41,8 @@ public class ImageActivity extends AppCompatActivity {
     private Button button_choose;
     private Button button_save;
     private Button button_cancel;
+
+    private Boolean imageUploaded = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,9 +69,28 @@ public class ImageActivity extends AppCompatActivity {
         });
 
         button_save.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
+                if (imageUploaded == false) {
+                    Toast.makeText(ImageActivity.this, "Upload an image", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    ArrayList<Integer> color1RGB = getRGBValues(color1);
+                    ArrayList<Integer> color2RGB = getRGBValues(color2);
+                    ArrayList<Integer> color3RGB = getRGBValues(color3);
+                    ArrayList<Integer> color4RGB = getRGBValues(color4);
+                    ArrayList<Integer> color5RGB = getRGBValues(color5);
 
+                    Intent intent = new Intent(ImageActivity.this, NameActivity.class);
+                    intent.putExtra("color1RGB", color1RGB);
+                    intent.putExtra("color2RGB", color2RGB);
+                    intent.putExtra("color3RGB", color3RGB);
+                    intent.putExtra("color4RGB", color4RGB);
+                    intent.putExtra("color5RGB", color5RGB);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -83,6 +108,7 @@ public class ImageActivity extends AppCompatActivity {
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
             uploadedImage.setImageURI(selectedImage);
+            imageUploaded = true;
 
             uploadedImage.invalidate();
             BitmapDrawable drawable = (BitmapDrawable) uploadedImage.getDrawable();
@@ -109,5 +135,26 @@ public class ImageActivity extends AppCompatActivity {
                 views.get(i).setBackgroundColor(colors.get(i));
             }
         }
+    }
+
+    // method to get rgb values
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public ArrayList<Integer> getRGBValues(ImageView view) {
+        // get color of color imageView
+        ColorDrawable drawable = (ColorDrawable) view.getBackground();
+        int color = drawable.getColor();
+
+        // get rgb values of the color
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+
+        // add to arrayList and return arrayList
+        ArrayList<Integer> rgbValues = new ArrayList<>();
+        rgbValues.add(red);
+        rgbValues.add(green);
+        rgbValues.add(blue);
+
+        return rgbValues;
     }
 }

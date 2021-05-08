@@ -23,6 +23,7 @@
     <string name="button_delete">Del</string>
     <string name="button_view">View</string>
     <string name="button_edit">Edit</string>
+    <string name="button_back">back</string>
 
     <string name="scratch_palette">Create New Palette</string>
     <string name="tab_hex">HEX</string>
@@ -35,9 +36,7 @@
     <string name="b">B</string>
     <string name="rgb_val">255</string>
 
-    <string name="HSL">HSL</string>
-    <string name="h">H</string>
-    <string name="s">S</string>
-    <string name="l">L</string>
+    <string name="editText_name">Palette Name</string>
+
 
 </resources>

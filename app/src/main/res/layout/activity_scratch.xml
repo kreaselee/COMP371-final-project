@@ -6,20 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editText_name_scratch"
+    <TextView
+        android:id="@+id/textView_title_scratch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:hint="@string/scratch_palette"
-        android:inputType="text"
+        android:text="@string/scratch_palette"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_cancel_scratch"
@@ -53,7 +51,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_name_scratch">
+        app:layout_constraintTop_toBottomOf="@+id/textView_title_scratch">
 
         <ImageView
             android:id="@+id/color1_scratch"
@@ -207,18 +205,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rgb"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewR_label"
                 android:layout_width="12dp"
                 android:layout_height="wrap_content"
-                android:text="@string/r" />
+                android:text="@string/r"
+                android:textSize="18sp" />
 
             <SeekBar
                 android:id="@+id/seekBarR"
@@ -233,13 +234,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewG_label"
                 android:layout_width="12dp"
                 android:layout_height="wrap_content"
-                android:text="@string/g" />
+                android:text="@string/g"
+                android:textSize="18sp" />
 
             <SeekBar
                 android:id="@+id/seekBarG"
@@ -253,13 +256,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textViewB_label"
                 android:layout_width="12dp"
                 android:layout_height="wrap_content"
-                android:text="@string/b" />
+                android:text="@string/b"
+                android:textSize="18sp" />
 
             <SeekBar
                 android:id="@+id/seekBarB"

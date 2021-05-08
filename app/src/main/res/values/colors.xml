@@ -12,9 +12,9 @@
     <color name="grey1_mid">#616161</color>
     <color name="grey1_dark">#373737</color>
 
-    <color name="grey2_light">#ffffff</color>
-    <color name="grey2_mid">#eeeeee</color>
-    <color name="grey2_dark">#bcbcbc</color>
+    <color name="grey2_light">#CACACA</color>
+    <color name="grey2_mid">#AAAAAA</color>
+    <color name="grey2_dark">#8C8C8C</color>
 
     <color name="seek_bar_background">#ababab</color>
     <color name="seek_bar_r_progress">#CC0000</color>

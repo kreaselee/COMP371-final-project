@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.animation.ArgbEvaluator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -50,6 +51,7 @@ public class ScratchActivity extends AppCompatActivity {
     private int blueValue = 0;
 
     private Button button_cancel;
+    private Button button_save;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -77,6 +79,7 @@ public class ScratchActivity extends AppCompatActivity {
         seekBarB = findViewById(R.id.seekBarB);
 
         button_cancel = findViewById(R.id.button_cancel_scratch);
+        button_save = findViewById(R.id.button_save_scratch);
 
         // when cancel button is clicked, exit activity
         button_cancel.setOnClickListener(new View.OnClickListener() {
@@ -86,8 +89,49 @@ public class ScratchActivity extends AppCompatActivity {
             }
         });
 
-        // set default colors and select first color imageView
-        setDefaultColors();
+        button_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Integer> color1RGB = getRGBValues(color1);
+                ArrayList<Integer> color2RGB = getRGBValues(color2);
+                ArrayList<Integer> color3RGB = getRGBValues(color3);
+                ArrayList<Integer> color4RGB = getRGBValues(color4);
+                ArrayList<Integer> color5RGB = getRGBValues(color5);
+
+                Intent intent = new Intent(ScratchActivity.this, NameActivity.class);
+                intent.putExtra("color1RGB", color1RGB);
+                intent.putExtra("color2RGB", color2RGB);
+                intent.putExtra("color3RGB", color3RGB);
+                intent.putExtra("color4RGB", color4RGB);
+                intent.putExtra("color5RGB", color5RGB);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        Intent intent = getIntent();
+
+        if (intent.getExtras() == null) {
+            // set default colors and select first color imageView
+            setDefaultColors();
+        }
+        else {
+            ArrayList<Integer> c1RGB = intent.getIntegerArrayListExtra("color1RGB");
+            ArrayList<Integer> c2RGB = intent.getIntegerArrayListExtra("color2RGB");
+            ArrayList<Integer> c3RGB = intent.getIntegerArrayListExtra("color3RGB");
+            ArrayList<Integer> c4RGB = intent.getIntegerArrayListExtra("color4RGB");
+            ArrayList<Integer> c5RGB = intent.getIntegerArrayListExtra("color5RGB");
+
+            // set color imageViews accordingly
+            color1.setBackgroundColor(Color.rgb(c1RGB.get(0), c1RGB.get(1), c1RGB.get(2)));
+            color2.setBackgroundColor(Color.rgb(c2RGB.get(0), c2RGB.get(1), c2RGB.get(2)));
+            color3.setBackgroundColor(Color.rgb(c3RGB.get(0), c3RGB.get(1), c3RGB.get(2)));
+            color4.setBackgroundColor(Color.rgb(c4RGB.get(0), c4RGB.get(1), c4RGB.get(2)));
+            color5.setBackgroundColor(Color.rgb(c5RGB.get(0), c5RGB.get(1), c5RGB.get(2)));
+        }
+        selectView(color1);
+
+        /*
         currentView = color1;
 
         // get colors of current color imageView (i.e., first view)
@@ -114,6 +158,8 @@ public class ScratchActivity extends AppCompatActivity {
         textViewRVal.setText(Integer.toString(valR));
         textViewGVal.setText(Integer.toString(valG));
         textViewBVal.setText(Integer.toString(valB));
+
+         */
 
         // when imageView is clicked on, set it be the current color imageView
         final View.OnClickListener colorClickListener =
@@ -211,8 +257,6 @@ public class ScratchActivity extends AppCompatActivity {
         color3.setBackgroundColor(c3);
         color4.setBackgroundColor(c4);
         color5.setBackgroundColor(c5);
-        // display the color of the current color imageView
-        displayColor.setBackgroundColor(c1);
     }
 
     // method to get rgb values
@@ -242,12 +286,16 @@ public class ScratchActivity extends AppCompatActivity {
         // set color imageView to current view
         currentView = view;
 
+        // get colors of current color imageView (i.e., first view)
+        // set values and colors of the rest of the views accordingly
         currentColorRGB = getRGBValues(currentView);
-
-        // get rgb values of the color of color imageView
         int valR = currentColorRGB.get(0);
         int valG = currentColorRGB.get(1);
         int valB = currentColorRGB.get(2);
+
+        redValue = valR;
+        greenValue = valG;
+        blueValue = valB;
 
         // set hex value
         String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();

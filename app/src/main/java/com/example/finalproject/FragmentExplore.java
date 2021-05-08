@@ -46,29 +46,30 @@ public class FragmentExplore extends Fragment {
 
         database = FirebaseDatabase.getInstance().getReference();
 
-        database.addValueEventListener(new ValueEventListener() {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 int count = 0;
 
-                for (DataSnapshot item_snapshot:dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
                     // Log.d("item id ", item_snapshot.getKey());
                     // Log.d("item id ", item_snapshot.child("color1").getValue().toString());
                     // Log.d("item desc", item_snapshot.child("item_desc").getValue().toString());
 
                     count++;
-                    ArrayList<ArrayList<Integer>> colorsRGB = new ArrayList<>();
+                    ArrayList<String> colorsHex = new ArrayList<>();
 
                     ArrayList<String> colors = new ArrayList<>();
-                    colors.add(item_snapshot.child("color1").getValue().toString());
-                    colors.add(item_snapshot.child("color2").getValue().toString());
-                    colors.add(item_snapshot.child("color3").getValue().toString());
-                    colors.add(item_snapshot.child("color4").getValue().toString());
-                    colors.add(item_snapshot.child("color5").getValue().toString());
+                    colors.add(snapshot.child("color1").getValue().toString());
+                    colors.add(snapshot.child("color2").getValue().toString());
+                    colors.add(snapshot.child("color3").getValue().toString());
+                    colors.add(snapshot.child("color4").getValue().toString());
+                    colors.add(snapshot.child("color5").getValue().toString());
 
                     for (int i = 0; i < colors.size(); i++) {
                         String string = colors.get(i);
+                        /*
                         ArrayList<Integer> rgb = new ArrayList<>();
                         int r = Integer.valueOf(string.substring(0,2), 16);
                         int g = Integer.valueOf(string.substring(2,4), 16);
@@ -76,10 +77,12 @@ public class FragmentExplore extends Fragment {
                         rgb.add(r);
                         rgb.add(g);
                         rgb.add(b);
-                        colorsRGB.add(rgb);
+
+                         */
+                        colorsHex.add(string);
                     }
 
-                    Palette palette = new Palette(item_snapshot.getKey(), colorsRGB);
+                    Palette palette = new Palette(snapshot.child("name").getValue().toString(), colorsHex);
                     palettes.add(palette);
 
                     if (count == dataSnapshot.getChildrenCount()) {
@@ -90,7 +93,7 @@ public class FragmentExplore extends Fragment {
                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                         recyclerView.setHasFixedSize(true);
                     }
-               }
+                }
             }
 
             @Override

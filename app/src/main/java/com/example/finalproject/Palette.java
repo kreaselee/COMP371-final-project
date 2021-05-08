@@ -6,9 +6,9 @@ public class Palette {
 
     // instance variables
     private String name;
-    private ArrayList<ArrayList<Integer>> colors;
+    private ArrayList<String> colors;
 
-    public Palette(String name, ArrayList<ArrayList<Integer>> colors) {
+    public Palette(String name, ArrayList<String> colors) {
         this.name = name;
         this.colors = colors;
     }
@@ -21,11 +21,11 @@ public class Palette {
         this.name = name;
     }
 
-    public ArrayList<ArrayList<Integer>> getColors() {
+    public ArrayList<String> getColors() {
         return colors;
     }
 
-    public void setColors(ArrayList<ArrayList<Integer>> colors) {
+    public void setColors(ArrayList<String> colors) {
         this.colors = colors;
     }
 }

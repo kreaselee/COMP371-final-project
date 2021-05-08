@@ -50,7 +50,7 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
         Palette palette = palettes.get(position);
         holder.textView_name.setText(palette.getName());
 
-        ArrayList<ArrayList<Integer>> colors = palette.getColors();
+        ArrayList<String> colors = palette.getColors();
         ArrayList<ImageView> views = new ArrayList<>();
         views.add(holder.color1);
         views.add(holder.color2);
@@ -59,11 +59,15 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
         views.add(holder.color5);
 
         for (int i = 0; i < colors.size(); i++) {
+            String string = colors.get(i);
 
-            ArrayList<Integer> values = colors.get(i);
-            int r = values.get(0);
-            int g = values.get(1);
-            int b = values.get(2);
+            ArrayList<Integer> rgb = new ArrayList<>();
+            int r = Integer.valueOf(string.substring(0,2), 16);
+            int g = Integer.valueOf(string.substring(2,4), 16);
+            int b = Integer.valueOf(string.substring(4,6), 16);
+            rgb.add(r);
+            rgb.add(g);
+            rgb.add(b);
 
             views.get(i).setBackgroundColor(Color.rgb(r, g, b));
         }

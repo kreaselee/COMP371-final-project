@@ -30,35 +30,35 @@
         <ImageView
             android:id="@+id/color1_explore"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color2_explore"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color3_explore"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color4_explore"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color5_explore"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
     </LinearLayout>

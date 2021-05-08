@@ -195,8 +195,11 @@ public class ScratchActivity extends AppCompatActivity {
         // create random palette to set as the default
         Random rnd = new Random();
         // get two random colors and set as first and last colors
-        int c1 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        int c5 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        // int c1 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        // int c5 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
+        int c1 = Color.argb(255, 60, 60, 60);
+        int c5 = Color.argb(255, 255, 255, 255);
         // get colors in between two end colors
         int c2 = (Integer) new ArgbEvaluator().evaluate((float)1/4, c1, c5);
         int c3 = (Integer) new ArgbEvaluator().evaluate((float)2/4, c1, c5);

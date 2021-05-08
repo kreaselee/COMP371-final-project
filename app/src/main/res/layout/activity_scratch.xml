@@ -7,17 +7,19 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/textView2"
+        android:id="@+id/editText_name_scratch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:hint="@string/scratch_palette"
+        android:inputType="text"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/button_cancel_scratch"
@@ -51,40 +53,40 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/editText_name_scratch">
 
         <ImageView
             android:id="@+id/color1_scratch"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color2_scratch"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color3_scratch"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color4_scratch"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/color5_scratch"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_weight="1"
             tools:ignore="ContentDescription" />
     </LinearLayout>
@@ -97,12 +99,12 @@
         android:baselineAligned="false"
         android:orientation="horizontal"
         android:paddingStart="24dp"
-        android:paddingTop="24dp"
+        android:paddingTop="18dp"
         android:paddingEnd="24dp"
-        android:paddingBottom="24dp"
+        android:paddingBottom="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+        app:layout_constraintTop_toBottomOf="@+id/currentColor_scratch">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -191,13 +193,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/button_save_scratch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentColor_scratch">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_scratch_values">
 
         <TextView
             android:id="@+id/textViewRGB_label"
@@ -265,17 +268,16 @@
                 android:max="255"
                 android:progressTint="@color/seek_bar_b_progress"
                 android:thumbTint="@color/seek_bar_b_progress" />
-
         </LinearLayout>
-
     </LinearLayout>
 
     <ImageView
         android:id="@+id/currentColor_scratch"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_scratch_values" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

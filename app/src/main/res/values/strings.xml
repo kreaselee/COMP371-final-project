@@ -24,6 +24,7 @@
     <string name="button_delete">Del</string>
     <string name="button_view">View</string>
     <string name="button_edit">Edit</string>
+    <string name="button_share">share</string>
     <string name="button_back">back</string>
 
     <string name="scratch_palette">Create New Palette</string>

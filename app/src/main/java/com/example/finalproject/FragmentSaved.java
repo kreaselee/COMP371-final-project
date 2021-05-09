@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,6 +71,22 @@ public class FragmentSaved extends Fragment implements PaletteListAdapter.OnButt
                     startActivity(intent);
                 }
                 Log.d("message", "click successful " + position);
+                break;
+            case R.id.button_saved_share:
+                String body = "Palette Name: " + paletteEntity.name
+                        + "\nHex Codes: #" + paletteEntity.color1
+                        + ", #" + paletteEntity.color2
+                        + ", #" + paletteEntity.color3
+                        + ", #" + paletteEntity.color4
+                        + ", #" + paletteEntity.color5;
+
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Color Palette");
+                intent.putExtra(Intent.EXTRA_TEXT, body);
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
                 break;
         }
     }

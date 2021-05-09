@@ -100,6 +100,7 @@ public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAd
         Button button_delete;
         Button button_view;
         Button button_edit;
+        Button button_share;
 
         OnButtonListener onButtonListener;
 
@@ -114,44 +115,20 @@ public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAd
             button_delete = itemView.findViewById(R.id.button_saved_delete);
             button_view = itemView.findViewById(R.id.button_saved_view);
             button_edit = itemView.findViewById(R.id.button_saved_edit);
+            button_share = itemView.findViewById(R.id.button_saved_share);
 
             this.onButtonListener = onButtonListener;
 
             button_delete.setOnClickListener(this);
             button_view.setOnClickListener(this);
             button_edit.setOnClickListener(this);
+            button_share.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int viewId = v.getId();
             onButtonListener.onButtonClick(getAdapterPosition(), viewId);
-            /*
-            switch (viewId) {
-                case R.id.button_saved_delete:
-                    paletteViewModel.deletePalette(paletteEntity);
-                    break;
-                case R.id.button_saved_view:
-
-                    break;
-                case R.id.button_saved_edit:
-                    if (paletteEntity != null) {
-                        Intent intent = new Intent(context, ScratchActivity.class);
-                        intent.putExtra("name", paletteEntity.name);
-                        intent.putExtra("color1RGB", colorValueConverter.hexToRGB(paletteEntity.color1));
-                        intent.putExtra("color2RGB", colorValueConverter.hexToRGB(paletteEntity.color2));
-                        intent.putExtra("color3RGB", colorValueConverter.hexToRGB(paletteEntity.color3));
-                        intent.putExtra("color4RGB", colorValueConverter.hexToRGB(paletteEntity.color4));
-                        intent.putExtra("color5RGB", colorValueConverter.hexToRGB(paletteEntity.color5));
-                        intent.putExtra("id", paletteEntity.id);
-                        // Log.d("name", paletteEntity.name);
-                        // Log.d("color1", paletteEntity.color1);
-                        context.startActivity(intent);
-                    }
-                    break;
-
-             */
-
         }
     }
 

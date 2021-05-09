@@ -83,19 +83,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_delete"
             app:icon="@android:drawable/ic_menu_delete"
-            app:iconGravity="textStart" />
-
-        <Button
-            android:id="@+id/button_saved_view"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_view"
-            app:icon="@android:drawable/ic_menu_view"
-            app:iconGravity="textStart" />
+            app:iconGravity="textEnd" />
 
         <Button
             android:id="@+id/button_saved_edit"
@@ -103,9 +92,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/button_edit"
             app:icon="@android:drawable/ic_menu_edit"
-            app:iconGravity="textStart" />
+            app:iconGravity="textEnd" />
+
+        <Button
+            android:id="@+id/button_saved_view"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:icon="@android:drawable/ic_menu_view"
+            app:iconGravity="textEnd" />
+
+        <Button
+            android:id="@+id/button_saved_share"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:icon="@android:drawable/ic_menu_share"
+            app:iconGravity="textEnd" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

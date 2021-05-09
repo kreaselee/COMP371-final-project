@@ -14,7 +14,10 @@ public class ColorValueConverter {
      * @return String hex code
      */
     public String RGBToHex(int r, int g, int b) {
-        String hex = String.format("%02x%02x%02x", r, g, b).toUpperCase();
+        String hex = "";
+        if (r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255) {
+            hex = String.format("%02x%02x%02x", r, g, b).toUpperCase();
+        }
         return hex;
     }
 

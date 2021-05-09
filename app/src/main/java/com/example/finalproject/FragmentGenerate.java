@@ -97,6 +97,7 @@ public class FragmentGenerate extends Fragment {
             for (int i = 0; i < views.size(); i++) {
                 ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
                 int color = drawable.getColor();
+                Log.d("color", Integer.toString(color));
                 int num = i+1;
 
                 ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);

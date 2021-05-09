@@ -1,7 +1,9 @@
 package com.example.finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,33 +13,49 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 
 public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAdapter.ViewHolder> {
-    public PaletteListAdapter(@NonNull DiffUtil.ItemCallback<PaletteEntity> diffCallback) {
+    private Context context;
+    private PaletteEntity paletteEntity;
+    private PaletteViewModel paletteViewModel;
+    private ColorValueConverter colorValueConverter = new ColorValueConverter();
+
+    private OnButtonListener onButtonListener;
+
+    public PaletteListAdapter(@NonNull DiffUtil.ItemCallback<PaletteEntity> diffCallback,
+                              OnButtonListener onButtonListener) {
         super(diffCallback);
+        this.onButtonListener = onButtonListener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
+        // set paletteViewModel
+        paletteViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(PaletteViewModel.class);
+
         LayoutInflater inflater = LayoutInflater.from(context);
         // inflate the custom layout
         View paletteView = inflater.inflate(R.layout.item_palette_saved, parent, false);
         // return a new ViewHolder
-        PaletteListAdapter.ViewHolder viewHolder = new PaletteListAdapter.ViewHolder(paletteView);
+        PaletteListAdapter.ViewHolder viewHolder = new PaletteListAdapter.ViewHolder(paletteView, onButtonListener);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        PaletteEntity paletteEntity = getItem(position);
+        paletteEntity = getItem(position);
         holder.textView_name.setText(paletteEntity.name);
 
         ArrayList<String> colors = new ArrayList<>();
@@ -83,7 +101,9 @@ public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAd
         Button button_view;
         Button button_edit;
 
-        public ViewHolder(@NonNull View itemView) {
+        OnButtonListener onButtonListener;
+
+        public ViewHolder(@NonNull View itemView, OnButtonListener onButtonListener) {
             super(itemView);
             textView_name = itemView.findViewById(R.id.textView_saved_name);
             color1 = itemView.findViewById(R.id.color1_saved);
@@ -94,10 +114,43 @@ public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAd
             button_delete = itemView.findViewById(R.id.button_saved_delete);
             button_view = itemView.findViewById(R.id.button_saved_view);
             button_edit = itemView.findViewById(R.id.button_saved_edit);
+
+            this.onButtonListener = onButtonListener;
+
+            button_delete.setOnClickListener(this);
+            button_view.setOnClickListener(this);
+            button_edit.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
+            int viewId = v.getId();
+            onButtonListener.onButtonClick(getAdapterPosition(), viewId);
+            /*
+            switch (viewId) {
+                case R.id.button_saved_delete:
+                    paletteViewModel.deletePalette(paletteEntity);
+                    break;
+                case R.id.button_saved_view:
+
+                    break;
+                case R.id.button_saved_edit:
+                    if (paletteEntity != null) {
+                        Intent intent = new Intent(context, ScratchActivity.class);
+                        intent.putExtra("name", paletteEntity.name);
+                        intent.putExtra("color1RGB", colorValueConverter.hexToRGB(paletteEntity.color1));
+                        intent.putExtra("color2RGB", colorValueConverter.hexToRGB(paletteEntity.color2));
+                        intent.putExtra("color3RGB", colorValueConverter.hexToRGB(paletteEntity.color3));
+                        intent.putExtra("color4RGB", colorValueConverter.hexToRGB(paletteEntity.color4));
+                        intent.putExtra("color5RGB", colorValueConverter.hexToRGB(paletteEntity.color5));
+                        intent.putExtra("id", paletteEntity.id);
+                        // Log.d("name", paletteEntity.name);
+                        // Log.d("color1", paletteEntity.color1);
+                        context.startActivity(intent);
+                    }
+                    break;
+
+             */
 
         }
     }
@@ -112,5 +165,9 @@ public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAd
         public boolean areContentsTheSame(@NonNull PaletteEntity oldItem, @NonNull PaletteEntity newItem) {
             return oldItem.name.equals(newItem.name);
         }
+    }
+
+    interface OnButtonListener {
+        void onButtonClick(int position, int viewId);
     }
 }

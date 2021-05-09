@@ -76,6 +76,8 @@ public class ScratchActivity extends AppCompatActivity {
         button_cancel = findViewById(R.id.button_cancel_scratch);
         button_save = findViewById(R.id.button_save_scratch);
 
+        Intent intentSent = getIntent();
+
         // when cancel button is clicked, exit activity
         button_cancel.setOnClickListener(v -> finish());
 
@@ -87,31 +89,35 @@ public class ScratchActivity extends AppCompatActivity {
             views.add(color4);
             views.add(color5);
 
-            Intent intent = new Intent(ScratchActivity.this, NameActivity.class);
+            Intent intentNew = new Intent(ScratchActivity.this, NameActivity.class);
+            if (intentSent.hasExtra("name")) {
+                intentNew.putExtra("name", intentSent.getStringExtra("name"));
+            }
+            if (intentSent.hasExtra("id")) {
+                intentNew.putExtra("id", intentSent.getIntExtra("id", 0));
+            }
             for (int i = 0; i < views.size(); i++) {
                 ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
                 int color = drawable.getColor();
                 int num = i+1;
 
                 ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
-                intent.putExtra("color" + num + "RGB", colorRGB);
+                intentNew.putExtra("color" + num + "RGB", colorRGB);
             }
-            startActivity(intent);
+            startActivity(intentNew);
             finish();
         });
 
-        Intent intent = getIntent();
-
-        if (intent.getExtras() == null) {
+        if (intentSent.getExtras() == null) {
             // set default colors and select first color imageView
             setDefaultColors();
         }
         else {
-            ArrayList<Integer> c1RGB = intent.getIntegerArrayListExtra("color1RGB");
-            ArrayList<Integer> c2RGB = intent.getIntegerArrayListExtra("color2RGB");
-            ArrayList<Integer> c3RGB = intent.getIntegerArrayListExtra("color3RGB");
-            ArrayList<Integer> c4RGB = intent.getIntegerArrayListExtra("color4RGB");
-            ArrayList<Integer> c5RGB = intent.getIntegerArrayListExtra("color5RGB");
+            ArrayList<Integer> c1RGB = intentSent.getIntegerArrayListExtra("color1RGB");
+            ArrayList<Integer> c2RGB = intentSent.getIntegerArrayListExtra("color2RGB");
+            ArrayList<Integer> c3RGB = intentSent.getIntegerArrayListExtra("color3RGB");
+            ArrayList<Integer> c4RGB = intentSent.getIntegerArrayListExtra("color4RGB");
+            ArrayList<Integer> c5RGB = intentSent.getIntegerArrayListExtra("color5RGB");
 
             // set color imageViews accordingly
             color1.setBackgroundColor(Color.rgb(c1RGB.get(0), c1RGB.get(1), c1RGB.get(2)));

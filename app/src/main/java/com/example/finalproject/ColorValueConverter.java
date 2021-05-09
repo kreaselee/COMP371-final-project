@@ -21,6 +21,21 @@ public class ColorValueConverter {
         return hex;
     }
 
+    public ArrayList<Integer> hexToRGB(String hex) {
+        String string = hex;
+
+        int r = Integer.valueOf(string.substring(0,2), 16);
+        int g = Integer.valueOf(string.substring(2,4), 16);
+        int b = Integer.valueOf(string.substring(4,6), 16);
+
+        ArrayList<Integer> rgb = new ArrayList<>();
+        rgb.add(r);
+        rgb.add(g);
+        rgb.add(b);
+
+        return rgb;
+    }
+
     /**
      *
      * @param color

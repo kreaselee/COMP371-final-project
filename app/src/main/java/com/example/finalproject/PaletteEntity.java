@@ -29,12 +29,15 @@ public class PaletteEntity {
     @ColumnInfo(name="color5")
     public String color5;
 
-    public PaletteEntity(String name, String color1, String color2, String color3, String color4, String color5) {
+    public PaletteEntity(String name, String color1, String color2, String color3, String color4, String color5, int id) {
         this.name = name;
         this.color1 = color1;
         this.color2 = color2;
         this.color3 = color3;
         this.color4 = color4;
         this.color5 = color5;
+        if (id != -1) {
+            this.id = id;
+        }
     }
 }

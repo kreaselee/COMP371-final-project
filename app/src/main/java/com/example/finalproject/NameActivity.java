@@ -76,15 +76,15 @@ public class NameActivity extends AppCompatActivity {
 
         paletteViewModel = new ViewModelProvider(this).get(PaletteViewModel.class);
 
-        Intent intent = getIntent();
-        if (intent.hasExtra("name")) {
-            paletteName.setText(intent.getStringExtra("name"));
+        Intent intentSent = getIntent();
+        if (intentSent.hasExtra("name")) {
+            paletteName.setText(intentSent.getStringExtra("name"));
         }
-        ArrayList<Integer> color1RGB = intent.getIntegerArrayListExtra("color1RGB");
-        ArrayList<Integer> color2RGB = intent.getIntegerArrayListExtra("color2RGB");
-        ArrayList<Integer> color3RGB = intent.getIntegerArrayListExtra("color3RGB");
-        ArrayList<Integer> color4RGB = intent.getIntegerArrayListExtra("color4RGB");
-        ArrayList<Integer> color5RGB = intent.getIntegerArrayListExtra("color5RGB");
+        ArrayList<Integer> color1RGB = intentSent.getIntegerArrayListExtra("color1RGB");
+        ArrayList<Integer> color2RGB = intentSent.getIntegerArrayListExtra("color2RGB");
+        ArrayList<Integer> color3RGB = intentSent.getIntegerArrayListExtra("color3RGB");
+        ArrayList<Integer> color4RGB = intentSent.getIntegerArrayListExtra("color4RGB");
+        ArrayList<Integer> color5RGB = intentSent.getIntegerArrayListExtra("color5RGB");
 
         setViews(color1, color1Hex, color1RGB);
         setViews(color2, color2Hex, color2RGB);
@@ -93,13 +93,13 @@ public class NameActivity extends AppCompatActivity {
         setViews(color5, color5Hex, color5RGB);
 
         button_back.setOnClickListener(v -> {
-            Intent intent1 = new Intent(NameActivity.this, ScratchActivity.class);
-            intent1.putExtra("color1RGB", color1RGB);
-            intent1.putExtra("color2RGB", color2RGB);
-            intent1.putExtra("color3RGB", color3RGB);
-            intent1.putExtra("color4RGB", color4RGB);
-            intent1.putExtra("color5RGB", color5RGB);
-            startActivity(intent1);
+            Intent intentNew = new Intent(NameActivity.this, ScratchActivity.class);
+            intentNew.putExtra("color1RGB", color1RGB);
+            intentNew.putExtra("color2RGB", color2RGB);
+            intentNew.putExtra("color3RGB", color3RGB);
+            intentNew.putExtra("color4RGB", color4RGB);
+            intentNew.putExtra("color5RGB", color5RGB);
+            startActivity(intentNew);
             finish();
         });
 
@@ -108,7 +108,47 @@ public class NameActivity extends AppCompatActivity {
                 Toast.makeText(NameActivity.this, "Enter palette name", Toast.LENGTH_SHORT).show();
             }
             else {
-                if (intent.hasExtra("name")) {
+                if (intentSent.hasExtra("id")) {
+                    ArrayList<String> colors = new ArrayList<>();
+                    ArrayList<ArrayList<Integer>> rgbValues = new ArrayList<>();
+                    rgbValues.add(color1RGB);
+                    rgbValues.add(color2RGB);
+                    rgbValues.add(color3RGB);
+                    rgbValues.add(color4RGB);
+                    rgbValues.add(color5RGB);
+
+                    for (int i = 0; i < rgbValues.size(); i++) {
+                        int r = rgbValues.get(i).get(0);
+                        int g = rgbValues.get(i).get(1);
+                        int b = rgbValues.get(i).get(2);
+                        String colorHex = colorValueConverter.RGBToHex(r,g,b);
+                        colors.add(colorHex);
+                    }
+
+                    /*
+                    PaletteEntity paletteEntity = new PaletteEntity(
+                            paletteName.getText().toString(),
+                            colors.get(0),
+                            colors.get(1),
+                            colors.get(2),
+                            colors.get(3),
+                            colors.get(4),
+                            intentSent.getIntExtra("id", 0)
+                    );
+
+                     */
+                    paletteViewModel.updatePalette(
+                            paletteName.getText().toString(),
+                            colors.get(0),
+                            colors.get(1),
+                            colors.get(2),
+                            colors.get(3),
+                            colors.get(4),
+                            intentSent.getIntExtra("id", 0)
+                    );
+                    finish();
+                }
+                else if (intentSent.hasExtra("name")) {
                     ArrayList<String> colors = new ArrayList<>();
                     ArrayList<ArrayList<Integer>> rgbValues = new ArrayList<>();
                     rgbValues.add(color1RGB);
@@ -131,7 +171,8 @@ public class NameActivity extends AppCompatActivity {
                             colors.get(1),
                             colors.get(2),
                             colors.get(3),
-                            colors.get(4)
+                            colors.get(4),
+                            -1
                     );
                     paletteViewModel.insertPalette(paletteEntity);
                     finish();
@@ -141,17 +182,19 @@ public class NameActivity extends AppCompatActivity {
                     dbByKey.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            int num = 1;
-                            String keyTest = "";
-
+                            int num = 0;
                             for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
                                 // Log.d("item id", snapshot.getKey());
-                                keyTest = "palette" + num;
-                                if (keyTest.matches(snapshot.getKey())) {
-                                    num++;
+                                String keyString = snapshot.getKey().replace("palette", "");
+                                int keyTest = Integer.parseInt(keyString);
+                                if (num < keyTest) {
+                                    num = keyTest;
                                 }
 
                             }
+
+                            num++;
+                            Log.d("num", Integer.toString(num));
                             key = "palette" + num;
                             Log.d("item id", key);
 
@@ -179,7 +222,8 @@ public class NameActivity extends AppCompatActivity {
                                     colors.get(1),
                                     colors.get(2),
                                     colors.get(3),
-                                    colors.get(4)
+                                    colors.get(4),
+                                    -1
                             );
                             paletteViewModel.insertPalette(paletteEntity);
                             finish();

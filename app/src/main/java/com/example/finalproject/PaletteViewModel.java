@@ -34,12 +34,12 @@ public class PaletteViewModel extends AndroidViewModel {
         paletteRepository.insertPalette(paletteEntity);
     }
 
-    public void deletePalette(PaletteEntity paletteEntity) {
-        paletteRepository.deletePalette(paletteEntity);
+    public void deletePalette(int id) {
+        paletteRepository.deletePalette(id);
     }
 
-    public void updatePalette(PaletteEntity paletteEntity) {
-        paletteRepository.updatePalette(paletteEntity);
+    public void updatePalette(String name, String color1, String color2, String color3, String color4, String color5, int id) {
+        paletteRepository.updatePalette(name, color1, color2, color3, color4, color5, id);
     }
 }
 

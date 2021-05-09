@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class NameActivity extends AppCompatActivity {
+    private ColorValueConverter colorValueConverter;
 
     private ImageView color1;
     private ImageView color2;
@@ -50,6 +51,7 @@ public class NameActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name);
+        colorValueConverter = new ColorValueConverter();
 
         color1 = findViewById(R.id.color1_name);
         color2 = findViewById(R.id.color2_name);
@@ -122,18 +124,36 @@ public class NameActivity extends AppCompatActivity {
                             key = "palette" + num;
                             Log.d("item id", key);
 
+                            ArrayList<String> colors = new ArrayList<>();
+                            ArrayList<ArrayList<Integer>> rgbValues = new ArrayList<>();
+                            rgbValues.add(color1RGB);
+                            rgbValues.add(color2RGB);
+                            rgbValues.add(color3RGB);
+                            rgbValues.add(color4RGB);
+                            rgbValues.add(color5RGB);
+
+                            for (int i = 0; i < rgbValues.size(); i++) {
+                                int r = rgbValues.get(i).get(0);
+                                int g = rgbValues.get(i).get(1);
+                                int b = rgbValues.get(i).get(2);
+                                String colorHex = colorValueConverter.RGBToHex(r,g,b);
+                                colors.add(colorHex);
+                            }
+
+                            /*
                             String color1Hex = getHexCode(color1RGB);
                             String color2Hex = getHexCode(color2RGB);
                             String color3Hex = getHexCode(color3RGB);
                             String color4Hex = getHexCode(color4RGB);
                             String color5Hex = getHexCode(color5RGB);
 
-                            ArrayList<String> colors = new ArrayList<>();
                             colors.add(color1Hex);
                             colors.add(color2Hex);
                             colors.add(color3Hex);
                             colors.add(color4Hex);
                             colors.add(color5Hex);
+
+                             */
 
                             writeNewPalette(paletteName.getText().toString(), colors);
                             finish();
@@ -152,7 +172,7 @@ public class NameActivity extends AppCompatActivity {
     private void setViews(ImageView imageView, TextView textView, ArrayList<Integer> rgb) {
         imageView.setBackgroundColor(Color.rgb(rgb.get(0), rgb.get(1), rgb.get(2)));
 
-        String hex = getHexCode(rgb);
+        String hex = colorValueConverter.RGBToHex(rgb.get(0), rgb.get(1), rgb.get(2));
         textView.setText(hex);
     }
 
@@ -166,8 +186,11 @@ public class NameActivity extends AppCompatActivity {
         database.child(key).child("color5").setValue(colors.get(4));
     }
 
+    /*
     public String getHexCode(ArrayList<Integer> rgb) {
         String hex = String.format("%02x%02x%02x", rgb.get(0), rgb.get(1), rgb.get(2)).toUpperCase();
         return hex;
     }
+
+     */
 }

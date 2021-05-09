@@ -126,8 +126,6 @@ public class ImageActivity extends AppCompatActivity {
                     Toast.makeText(ImageActivity.this, "Upload an image", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Intent intent = new Intent(ImageActivity.this, NameActivity.class);
-
                     ArrayList<ImageView> views = new ArrayList<>();
                     views.add(color1);
                     views.add(color2);
@@ -135,6 +133,7 @@ public class ImageActivity extends AppCompatActivity {
                     views.add(color4);
                     views.add(color5);
 
+                    Intent intent = new Intent(ImageActivity.this, NameActivity.class);
                     for (int i = 0; i < views.size(); i++) {
                         ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
                         int color = drawable.getColor();

@@ -41,6 +41,8 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.entity.StringEntity;
 
 public class FragmentGenerate extends Fragment {
+    private ColorValueConverter colorValueConverter;
+
     private ImageView color1;
     private ImageView color2;
     private ImageView color3;
@@ -61,6 +63,7 @@ public class FragmentGenerate extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_generate, container, false);
+        colorValueConverter = new ColorValueConverter();
 
         color1 = view.findViewById(R.id.color1_generate);
         color2 = view.findViewById(R.id.color2_generate);
@@ -101,18 +104,22 @@ public class FragmentGenerate extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                ArrayList<Integer> color1RGB = getRGBValues(color1);
-                ArrayList<Integer> color2RGB = getRGBValues(color2);
-                ArrayList<Integer> color3RGB = getRGBValues(color3);
-                ArrayList<Integer> color4RGB = getRGBValues(color4);
-                ArrayList<Integer> color5RGB = getRGBValues(color5);
+                ArrayList<ImageView> views = new ArrayList<>();
+                views.add(color1);
+                views.add(color2);
+                views.add(color3);
+                views.add(color4);
+                views.add(color5);
 
                 Intent intent = new Intent(getActivity(), NameActivity.class);
-                intent.putExtra("color1RGB", color1RGB);
-                intent.putExtra("color2RGB", color2RGB);
-                intent.putExtra("color3RGB", color3RGB);
-                intent.putExtra("color4RGB", color4RGB);
-                intent.putExtra("color5RGB", color5RGB);
+                for (int i = 0; i < views.size(); i++) {
+                    ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
+                    int color = drawable.getColor();
+                    int num = i+1;
+
+                    ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
+                    intent.putExtra("color" + num + "RGB", colorRGB);
+                }
                 startActivity(intent);
             }
         });
@@ -210,6 +217,7 @@ public class FragmentGenerate extends Fragment {
 
     }
 
+    /*
     // method to get rgb values
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList<Integer> getRGBValues(ImageView view) {
@@ -230,4 +238,6 @@ public class FragmentGenerate extends Fragment {
 
         return rgbValues;
     }
+
+     */
 }

@@ -27,6 +27,7 @@ import java.util.Random;
 public class ScratchActivity extends AppCompatActivity {
 
     private ConstraintLayout scratchLayout;
+    private ColorValueConverter colorValueConverter;
 
     private ImageView color1;
     private ImageView color2;
@@ -58,6 +59,7 @@ public class ScratchActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scratch);
+        colorValueConverter = new ColorValueConverter();
 
         // find views by id
         scratchLayout = findViewById(R.id.scratchLayout);
@@ -92,6 +94,25 @@ public class ScratchActivity extends AppCompatActivity {
         button_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<ImageView> views = new ArrayList<>();
+                views.add(color1);
+                views.add(color2);
+                views.add(color3);
+                views.add(color4);
+                views.add(color5);
+
+                Intent intent = new Intent(ScratchActivity.this, NameActivity.class);
+                for (int i = 0; i < views.size(); i++) {
+                    ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
+                    int color = drawable.getColor();
+                    int num = i+1;
+
+                    ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
+                    intent.putExtra("color" + num + "RGB", colorRGB);
+                }
+                startActivity(intent);
+                finish();
+                /*
                 ArrayList<Integer> color1RGB = getRGBValues(color1);
                 ArrayList<Integer> color2RGB = getRGBValues(color2);
                 ArrayList<Integer> color3RGB = getRGBValues(color3);
@@ -106,6 +127,8 @@ public class ScratchActivity extends AppCompatActivity {
                 intent.putExtra("color5RGB", color5RGB);
                 startActivity(intent);
                 finish();
+
+                 */
             }
         });
 
@@ -259,6 +282,7 @@ public class ScratchActivity extends AppCompatActivity {
         color5.setBackgroundColor(c5);
     }
 
+    /*
     // method to get rgb values
     @RequiresApi(api = Build.VERSION_CODES.O)
     public ArrayList<Integer> getRGBValues(ImageView view) {
@@ -280,6 +304,8 @@ public class ScratchActivity extends AppCompatActivity {
         return rgbValues;
     }
 
+     */
+
     // method to select color imageView
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void selectView(ImageView view) {
@@ -288,7 +314,9 @@ public class ScratchActivity extends AppCompatActivity {
 
         // get colors of current color imageView (i.e., first view)
         // set values and colors of the rest of the views accordingly
-        currentColorRGB = getRGBValues(currentView);
+        ColorDrawable drawable = (ColorDrawable) currentView.getBackground();
+        int color = drawable.getColor();
+        currentColorRGB = colorValueConverter.intToRGB(color);
         int valR = currentColorRGB.get(0);
         int valG = currentColorRGB.get(1);
         int valB = currentColorRGB.get(2);
@@ -298,7 +326,7 @@ public class ScratchActivity extends AppCompatActivity {
         blueValue = valB;
 
         // set hex value
-        String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();
+        String hex = colorValueConverter.RGBToHex(valR, valG, valB);
         textViewHexVal.setText(hex);
 
         // display the color of the current color imageView

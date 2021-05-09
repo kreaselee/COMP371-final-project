@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class ColorValueConverter {
 
-    public String RGBToHex(ArrayList<Integer> rgb) {
-        String hex = String.format("%02x%02x%02x", rgb.get(0), rgb.get(1), rgb.get(2)).toUpperCase();
+    public String RGBToHex(int r, int g, int b) {
+        String hex = String.format("%02x%02x%02x", r, g, b).toUpperCase();
         return hex;
     }
 

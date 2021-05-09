@@ -24,8 +24,9 @@
     <string name="button_delete">Del</string>
     <string name="button_view">View</string>
     <string name="button_edit">Edit</string>
-    <string name="button_share">share</string>
-    <string name="button_back">back</string>
+    <string name="button_share">Share</string>
+    <string name="button_back">Back</string>
+    <string name="button_change">Change view</string>
 
     <string name="scratch_palette">Create New Palette</string>
     <string name="tab_hex">HEX</string>
@@ -40,5 +41,8 @@
 
     <string name="editText_name">Palette Name</string>
 
-
+    <string name="view_heading">Heading</string>
+    <string name="view_heading2">Heading 2</string>
+    <string name="view_text1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras metus
+        ante, mattis id mauris id, fermentum sagittis nibh. Praesent accumsan dignissim congue.</string>
 </resources>

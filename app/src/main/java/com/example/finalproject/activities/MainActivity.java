@@ -25,19 +25,19 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        loadFragment(new FragmentExplore(), R.id.fragmentContainerView);
+        loadFragment(new FragmentExplore(), R.id.fragmentContainerView_main);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.page_1) {
-                loadFragment(new FragmentExplore(), R.id.fragmentContainerView);
+                loadFragment(new FragmentExplore(), R.id.fragmentContainerView_main);
                 return true;
             }
             else if (item.getItemId() == R.id.page_2) {
-                loadFragment(new FragmentGenerate(), R.id.fragmentContainerView);
+                loadFragment(new FragmentGenerate(), R.id.fragmentContainerView_main);
                 return true;
             }
             else if (item.getItemId() == R.id.page_3) {
-                loadFragment(new FragmentSaved(), R.id.fragmentContainerView);
+                loadFragment(new FragmentSaved(), R.id.fragmentContainerView_main);
                 return true;
             }
             return false;

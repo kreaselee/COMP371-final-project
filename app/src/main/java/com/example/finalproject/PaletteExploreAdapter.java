@@ -14,8 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.finalproject.activities.NameActivity;
 
 import java.util.ArrayList;
 import java.util.List;

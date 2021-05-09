@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalproject.activities;
 
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
@@ -15,10 +15,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.finalproject.ColorValueConverter;
+import com.example.finalproject.R;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class ScratchActivity extends AppCompatActivity {
 

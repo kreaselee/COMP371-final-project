@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalproject.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.finalproject.ColorValueConverter;
+import com.example.finalproject.PaletteEntity;
+import com.example.finalproject.PaletteViewModel;
+import com.example.finalproject.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -125,18 +129,6 @@ public class NameActivity extends AppCompatActivity {
                         colors.add(colorHex);
                     }
 
-                    /*
-                    PaletteEntity paletteEntity = new PaletteEntity(
-                            paletteName.getText().toString(),
-                            colors.get(0),
-                            colors.get(1),
-                            colors.get(2),
-                            colors.get(3),
-                            colors.get(4),
-                            intentSent.getIntExtra("id", 0)
-                    );
-
-                     */
                     paletteViewModel.updatePalette(
                             paletteName.getText().toString(),
                             colors.get(0),

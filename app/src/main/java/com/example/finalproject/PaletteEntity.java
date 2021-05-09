@@ -4,8 +4,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-
 @Entity(tableName ="palette_table")
 public class PaletteEntity {
     @PrimaryKey(autoGenerate=true)

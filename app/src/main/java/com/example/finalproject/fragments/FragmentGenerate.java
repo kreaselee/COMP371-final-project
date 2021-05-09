@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalproject.fragments;
 
 import android.animation.ArgbEvaluator;
 import android.content.Intent;
@@ -20,6 +20,11 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.example.finalproject.ColorValueConverter;
+import com.example.finalproject.activities.ImageActivity;
+import com.example.finalproject.activities.NameActivity;
+import com.example.finalproject.R;
+import com.example.finalproject.activities.ScratchActivity;
 import com.google.firebase.database.FirebaseDatabase;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -53,8 +58,6 @@ public class FragmentGenerate extends Fragment {
     private static final String api_url="http://colormind.io/api/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
-    private FirebaseDatabase database;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,8 +73,6 @@ public class FragmentGenerate extends Fragment {
         button_scratch = view.findViewById(R.id.button_scratch);
         button_image = view.findViewById(R.id.button_image);
         button_save = view.findViewById(R.id.button_generate_save);
-
-        database = FirebaseDatabase.getInstance();
 
         button_random.setOnClickListener(v -> generatePalette());
 

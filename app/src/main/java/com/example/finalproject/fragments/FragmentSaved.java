@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package com.example.finalproject.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,10 +11,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.finalproject.ColorValueConverter;
+import com.example.finalproject.PaletteEntity;
+import com.example.finalproject.PaletteViewModel;
+import com.example.finalproject.R;
+import com.example.finalproject.activities.ScratchActivity;
 
 import java.util.List;
 

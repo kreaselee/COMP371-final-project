@@ -1,28 +1,27 @@
-package com.example.finalproject;
+package com.example.finalproject.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalproject.ColorValueConverter;
+import com.example.finalproject.PaletteEntity;
+import com.example.finalproject.PaletteViewModel;
+import com.example.finalproject.R;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Observer;
 
 public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAdapter.ViewHolder> {
     private Context context;
@@ -75,16 +74,9 @@ public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAd
         for (int i = 0; i < colors.size(); i++) {
             String string = colors.get(i);
 
-            // ArrayList<Integer> rgb = new ArrayList<>();
             int r = Integer.valueOf(string.substring(0,2), 16);
             int g = Integer.valueOf(string.substring(2,4), 16);
             int b = Integer.valueOf(string.substring(4,6), 16);
-            /*
-            rgb.add(r);
-            rgb.add(g);
-            rgb.add(b);
-
-             */
 
             views.get(i).setBackgroundColor(Color.rgb(r, g, b));
         }

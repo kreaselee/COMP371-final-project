@@ -1,5 +1,6 @@
 package com.example.finalproject.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import com.example.finalproject.fragments.FragmentExplore;
 import com.example.finalproject.fragments.FragmentViewInfo;
 import com.example.finalproject.fragments.FragmentViewText;
 
+import java.util.ArrayList;
+
 public class ViewActivity extends AppCompatActivity {
     private Button button_exit;
     private Button button_change;
@@ -28,18 +31,39 @@ public class ViewActivity extends AppCompatActivity {
         button_exit = findViewById(R.id.button_view_exit);
         button_change = findViewById(R.id.button_view_change);
 
-        loadFragment(new FragmentViewInfo(), R.id.fragmentContainerView_view);
+        Intent intentSent = getIntent();
+        String name = intentSent.getStringExtra("name");
+        ArrayList<Integer> color1RGB = intentSent.getIntegerArrayListExtra("color1RGB");
+        ArrayList<Integer> color2RGB = intentSent.getIntegerArrayListExtra("color2RGB");
+        ArrayList<Integer> color3RGB = intentSent.getIntegerArrayListExtra("color3RGB");
+        ArrayList<Integer> color4RGB = intentSent.getIntegerArrayListExtra("color4RGB");
+        ArrayList<Integer> color5RGB = intentSent.getIntegerArrayListExtra("color5RGB");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putIntegerArrayList("color1RGB", color1RGB);
+        bundle.putIntegerArrayList("color2RGB", color2RGB);
+        bundle.putIntegerArrayList("color3RGB", color3RGB);
+        bundle.putIntegerArrayList("color4RGB", color4RGB);
+        bundle.putIntegerArrayList("color5RGB", color5RGB);
+
+        FragmentViewInfo fragmentViewInfo = new FragmentViewInfo();
+        fragmentViewInfo.setArguments(bundle);
+        loadFragment(fragmentViewInfo, R.id.fragmentContainerView_view);
         currentFragment = 0;
+
+        FragmentViewText fragmentViewText = new FragmentViewText();
+        fragmentViewText.setArguments(bundle);
 
         button_exit.setOnClickListener(v -> finish());
 
         button_change.setOnClickListener(v -> {
             if (currentFragment == 0) {
-                loadFragment(new FragmentViewText(), R.id.fragmentContainerView_view);
+                loadFragment(fragmentViewText, R.id.fragmentContainerView_view);
                 currentFragment = 1;
             }
             else {
-                loadFragment(new FragmentViewInfo(), R.id.fragmentContainerView_view);
+                loadFragment(fragmentViewInfo, R.id.fragmentContainerView_view);
                 currentFragment = 0;
             }
         });

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,6 +47,8 @@ public class NameActivity extends AppCompatActivity {
     private DatabaseReference database;
     private String key = "";
 
+    private PaletteViewModel paletteViewModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +74,12 @@ public class NameActivity extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance().getReference();
 
+        paletteViewModel = new ViewModelProvider(this).get(PaletteViewModel.class);
+
         Intent intent = getIntent();
+        if (intent.hasExtra("name")) {
+            paletteName.setText(intent.getStringExtra("name"));
+        }
         ArrayList<Integer> color1RGB = intent.getIntegerArrayListExtra("color1RGB");
         ArrayList<Integer> color2RGB = intent.getIntegerArrayListExtra("color2RGB");
         ArrayList<Integer> color3RGB = intent.getIntegerArrayListExtra("color3RGB");
@@ -100,49 +108,89 @@ public class NameActivity extends AppCompatActivity {
                 Toast.makeText(NameActivity.this, "Enter palette name", Toast.LENGTH_SHORT).show();
             }
             else {
-                Query dbByKey = database.orderByKey();
-                dbByKey.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        int num = 1;
-                        String keyTest = "";
+                if (intent.hasExtra("name")) {
+                    ArrayList<String> colors = new ArrayList<>();
+                    ArrayList<ArrayList<Integer>> rgbValues = new ArrayList<>();
+                    rgbValues.add(color1RGB);
+                    rgbValues.add(color2RGB);
+                    rgbValues.add(color3RGB);
+                    rgbValues.add(color4RGB);
+                    rgbValues.add(color5RGB);
 
-                        for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
-                            // Log.d("item id", snapshot.getKey());
-                            keyTest = "palette" + num;
-                            if (keyTest.matches(snapshot.getKey())) {
-                                num++;
+                    for (int i = 0; i < rgbValues.size(); i++) {
+                        int r = rgbValues.get(i).get(0);
+                        int g = rgbValues.get(i).get(1);
+                        int b = rgbValues.get(i).get(2);
+                        String colorHex = colorValueConverter.RGBToHex(r,g,b);
+                        colors.add(colorHex);
+                    }
+
+                    PaletteEntity paletteEntity = new PaletteEntity(
+                            paletteName.getText().toString(),
+                            colors.get(0),
+                            colors.get(1),
+                            colors.get(2),
+                            colors.get(3),
+                            colors.get(4)
+                    );
+                    paletteViewModel.insertPalette(paletteEntity);
+                    finish();
+                }
+                else {
+                    Query dbByKey = database.orderByKey();
+                    dbByKey.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            int num = 1;
+                            String keyTest = "";
+
+                            for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
+                                // Log.d("item id", snapshot.getKey());
+                                keyTest = "palette" + num;
+                                if (keyTest.matches(snapshot.getKey())) {
+                                    num++;
+                                }
+
+                            }
+                            key = "palette" + num;
+                            Log.d("item id", key);
+
+                            ArrayList<String> colors = new ArrayList<>();
+                            ArrayList<ArrayList<Integer>> rgbValues = new ArrayList<>();
+                            rgbValues.add(color1RGB);
+                            rgbValues.add(color2RGB);
+                            rgbValues.add(color3RGB);
+                            rgbValues.add(color4RGB);
+                            rgbValues.add(color5RGB);
+
+                            for (int i = 0; i < rgbValues.size(); i++) {
+                                int r = rgbValues.get(i).get(0);
+                                int g = rgbValues.get(i).get(1);
+                                int b = rgbValues.get(i).get(2);
+                                String colorHex = colorValueConverter.RGBToHex(r,g,b);
+                                colors.add(colorHex);
                             }
 
-                        }
-                        key = "palette" + num;
-                        Log.d("item id", key);
+                            writeNewPalette(paletteName.getText().toString(), colors);
 
-                        ArrayList<String> colors = new ArrayList<>();
-                        ArrayList<ArrayList<Integer>> rgbValues = new ArrayList<>();
-                        rgbValues.add(color1RGB);
-                        rgbValues.add(color2RGB);
-                        rgbValues.add(color3RGB);
-                        rgbValues.add(color4RGB);
-                        rgbValues.add(color5RGB);
-
-                        for (int i = 0; i < rgbValues.size(); i++) {
-                            int r = rgbValues.get(i).get(0);
-                            int g = rgbValues.get(i).get(1);
-                            int b = rgbValues.get(i).get(2);
-                            String colorHex = colorValueConverter.RGBToHex(r,g,b);
-                            colors.add(colorHex);
+                            PaletteEntity paletteEntity = new PaletteEntity(
+                                    paletteName.getText().toString(),
+                                    colors.get(0),
+                                    colors.get(1),
+                                    colors.get(2),
+                                    colors.get(3),
+                                    colors.get(4)
+                            );
+                            paletteViewModel.insertPalette(paletteEntity);
+                            finish();
                         }
 
-                        writeNewPalette(paletteName.getText().toString(), colors);
-                        finish();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("loadPost:onCancelled", String.valueOf(databaseError.toException()));
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("loadPost:onCancelled", String.valueOf(databaseError.toException()));
+                        }
+                    });
+                }
             }
         });
     }

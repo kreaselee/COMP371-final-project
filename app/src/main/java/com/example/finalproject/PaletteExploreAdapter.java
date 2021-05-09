@@ -1,7 +1,10 @@
 package com.example.finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -18,6 +22,9 @@ import java.util.List;
 
 public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAdapter.ViewHolder> {
     private List<Palette> palettes;
+    private Context context;
+
+    private ColorValueConverter colorValueConverter = new ColorValueConverter();
 
     // pass this list into the constructor of the adapter
     public PaletteExploreAdapter(List<Palette> palettes) {
@@ -27,7 +34,7 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         // inflate the custom layout
         View paletteView = inflater.inflate(R.layout.item_palette_explore, parent, false);
@@ -94,7 +101,25 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
 
         @Override
         public void onClick(View v) {
+            ArrayList<ImageView> views = new ArrayList<>();
+            views.add(color1);
+            views.add(color2);
+            views.add(color3);
+            views.add(color4);
+            views.add(color5);
 
+            Intent intent = new Intent(context, NameActivity.class);
+            intent.putExtra("name", textView_name.getText().toString());
+            for (int i = 0; i < views.size(); i++) {
+                ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
+                int color = drawable.getColor();
+                Log.d("color", Integer.toString(color));
+                int num = i+1;
+
+                ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
+                intent.putExtra("color" + num + "RGB", colorRGB);
+            }
+            context.startActivity(intent);
         }
     }
 

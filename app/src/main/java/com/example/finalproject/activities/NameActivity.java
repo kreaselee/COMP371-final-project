@@ -138,6 +138,7 @@ public class NameActivity extends AppCompatActivity {
                             colors.get(4),
                             intentSent.getIntExtra("id", 0)
                     );
+                    Toast.makeText(NameActivity.this, "Palette saved", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else if (intentSent.hasExtra("name")) {
@@ -167,6 +168,7 @@ public class NameActivity extends AppCompatActivity {
                             -1
                     );
                     paletteViewModel.insertPalette(paletteEntity);
+                    Toast.makeText(NameActivity.this, "Palette saved", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 else {
@@ -218,6 +220,7 @@ public class NameActivity extends AppCompatActivity {
                                     -1
                             );
                             paletteViewModel.insertPalette(paletteEntity);
+                            Toast.makeText(NameActivity.this, "Palette saved", Toast.LENGTH_SHORT).show();
                             finish();
                         }
 

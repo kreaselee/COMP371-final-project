@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class ImageActivity extends AppCompatActivity {
 
-    private ColorConverter colorConverter;
+    private ColorValueConverter colorValueConverter;
     private static final int RESULT_LOAD_IMAGE = 1;
 
     private ImageView uploadedImage;
@@ -55,7 +55,7 @@ public class ImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
 
-        colorConverter = new ColorConverter();
+        colorValueConverter = new ColorValueConverter();
 
         uploadedImage = findViewById(R.id.imageView_uploaded);
         color1 = findViewById(R.id.color1_image);
@@ -140,7 +140,7 @@ public class ImageActivity extends AppCompatActivity {
                         int color = drawable.getColor();
                         int num = i+1;
 
-                        ArrayList<Integer> colorRGB = colorConverter.intToRGB(color);
+                        ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
                         intent.putExtra("color" + num + "RGB", colorRGB);
                     }
                     /*

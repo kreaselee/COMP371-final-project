@@ -6,10 +6,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,14 +17,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.loopj.android.http.AsyncHttpClient;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class ScratchActivity extends AppCompatActivity {
 
-    private ConstraintLayout scratchLayout;
     private ColorValueConverter colorValueConverter;
 
     private ImageView color1;
@@ -62,8 +57,6 @@ public class ScratchActivity extends AppCompatActivity {
         colorValueConverter = new ColorValueConverter();
 
         // find views by id
-        scratchLayout = findViewById(R.id.scratchLayout);
-
         color1 = findViewById(R.id.color1_scratch);
         color2 = findViewById(R.id.color2_scratch);
         color3 = findViewById(R.id.color3_scratch);
@@ -84,52 +77,27 @@ public class ScratchActivity extends AppCompatActivity {
         button_save = findViewById(R.id.button_save_scratch);
 
         // when cancel button is clicked, exit activity
-        button_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
+        button_cancel.setOnClickListener(v -> finish());
+
+        button_save.setOnClickListener(v -> {
+            ArrayList<ImageView> views = new ArrayList<>();
+            views.add(color1);
+            views.add(color2);
+            views.add(color3);
+            views.add(color4);
+            views.add(color5);
+
+            Intent intent = new Intent(ScratchActivity.this, NameActivity.class);
+            for (int i = 0; i < views.size(); i++) {
+                ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
+                int color = drawable.getColor();
+                int num = i+1;
+
+                ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
+                intent.putExtra("color" + num + "RGB", colorRGB);
             }
-        });
-
-        button_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<ImageView> views = new ArrayList<>();
-                views.add(color1);
-                views.add(color2);
-                views.add(color3);
-                views.add(color4);
-                views.add(color5);
-
-                Intent intent = new Intent(ScratchActivity.this, NameActivity.class);
-                for (int i = 0; i < views.size(); i++) {
-                    ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
-                    int color = drawable.getColor();
-                    int num = i+1;
-
-                    ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
-                    intent.putExtra("color" + num + "RGB", colorRGB);
-                }
-                startActivity(intent);
-                finish();
-                /*
-                ArrayList<Integer> color1RGB = getRGBValues(color1);
-                ArrayList<Integer> color2RGB = getRGBValues(color2);
-                ArrayList<Integer> color3RGB = getRGBValues(color3);
-                ArrayList<Integer> color4RGB = getRGBValues(color4);
-                ArrayList<Integer> color5RGB = getRGBValues(color5);
-
-                Intent intent = new Intent(ScratchActivity.this, NameActivity.class);
-                intent.putExtra("color1RGB", color1RGB);
-                intent.putExtra("color2RGB", color2RGB);
-                intent.putExtra("color3RGB", color3RGB);
-                intent.putExtra("color4RGB", color4RGB);
-                intent.putExtra("color5RGB", color5RGB);
-                startActivity(intent);
-                finish();
-
-                 */
-            }
+            startActivity(intent);
+            finish();
         });
 
         Intent intent = getIntent();
@@ -154,59 +122,26 @@ public class ScratchActivity extends AppCompatActivity {
         }
         selectView(color1);
 
-        /*
-        currentView = color1;
-
-        // get colors of current color imageView (i.e., first view)
-        // set values and colors of the rest of the views accordingly
-        currentColorRGB = getRGBValues(currentView);
-        int valR = currentColorRGB.get(0);
-        int valG = currentColorRGB.get(1);
-        int valB = currentColorRGB.get(2);
-
-        redValue = valR;
-        greenValue = valG;
-        blueValue = valB;
-
-        // set hex value
-        String hex = String.format("%02x%02x%02x", valR, valG, valB).toUpperCase();
-        textViewHexVal.setText(hex);
-
-        // set seekBar progress values
-        seekBarR.setProgress(valR);
-        seekBarG.setProgress(valG);
-        seekBarB.setProgress(valB);
-
-        // set RGB values
-        textViewRVal.setText(Integer.toString(valR));
-        textViewGVal.setText(Integer.toString(valG));
-        textViewBVal.setText(Integer.toString(valB));
-
-         */
-
         // when imageView is clicked on, set it be the current color imageView
         final View.OnClickListener colorClickListener =
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int viewId = v.getId();
-                        switch (viewId) {
-                            case R.id.color1_scratch:
-                                selectView(color1);
-                                break;
-                            case R.id.color2_scratch:
-                                selectView(color2);
-                                break;
-                            case R.id.color3_scratch:
-                                selectView(color3);
-                                break;
-                            case R.id.color4_scratch:
-                                selectView(color4);
-                                break;
-                            case R.id.color5_scratch:
-                                selectView(color5);
-                                break;
-                        }
+                v -> {
+                    int viewId = v.getId();
+                    switch (viewId) {
+                        case R.id.color1_scratch:
+                            selectView(color1);
+                            break;
+                        case R.id.color2_scratch:
+                            selectView(color2);
+                            break;
+                        case R.id.color3_scratch:
+                            selectView(color3);
+                            break;
+                        case R.id.color4_scratch:
+                            selectView(color4);
+                            break;
+                        case R.id.color5_scratch:
+                            selectView(color5);
+                            break;
                     }
                 };
 
@@ -261,12 +196,7 @@ public class ScratchActivity extends AppCompatActivity {
     }
 
     public void setDefaultColors() {
-        // create random palette to set as the default
-        Random rnd = new Random();
-        // get two random colors and set as first and last colors
-        // int c1 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        // int c5 = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-
+        // grayscale palette
         int c1 = Color.argb(255, 60, 60, 60);
         int c5 = Color.argb(255, 255, 255, 255);
         // get colors in between two end colors
@@ -281,30 +211,6 @@ public class ScratchActivity extends AppCompatActivity {
         color4.setBackgroundColor(c4);
         color5.setBackgroundColor(c5);
     }
-
-    /*
-    // method to get rgb values
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList<Integer> getRGBValues(ImageView view) {
-        // get color of color imageView
-        ColorDrawable drawable = (ColorDrawable) view.getBackground();
-        int color = drawable.getColor();
-
-        // get rgb values of the color
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-
-        // add to arrayList and return arrayList
-        ArrayList<Integer> rgbValues = new ArrayList<>();
-        rgbValues.add(red);
-        rgbValues.add(green);
-        rgbValues.add(blue);
-
-        return rgbValues;
-    }
-
-     */
 
     // method to select color imageView
     @RequiresApi(api = Build.VERSION_CODES.O)

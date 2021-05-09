@@ -1,13 +1,7 @@
 package com.example.finalproject;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +18,10 @@ import java.util.List;
 
 public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAdapter.ViewHolder> {
     private List<Palette> palettes;
-    private int viewWidth;
-    private Context context;
 
     // pass this list into the constructor of the adapter
-    public PaletteExploreAdapter(List<Palette> palettes, int viewWidth) {
+    public PaletteExploreAdapter(List<Palette> palettes) {
         this.palettes = palettes;
-        this.viewWidth = viewWidth;
     }
 
     @NonNull
@@ -99,8 +90,6 @@ public class PaletteExploreAdapter extends RecyclerView.Adapter<PaletteExploreAd
             linearLayout = itemView.findViewById(R.id.linearLayout_item_palette_explore);
             button_save = itemView.findViewById(R.id.button_explore_save);
             button_save.setOnClickListener(this);
-
-            context = itemView.getContext();
         }
 
         @Override

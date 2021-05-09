@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -85,86 +84,65 @@ public class NameActivity extends AppCompatActivity {
         setViews(color4, color4Hex, color4RGB);
         setViews(color5, color5Hex, color5RGB);
 
-        button_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NameActivity.this, ScratchActivity.class);
-                intent.putExtra("color1RGB", color1RGB);
-                intent.putExtra("color2RGB", color2RGB);
-                intent.putExtra("color3RGB", color3RGB);
-                intent.putExtra("color4RGB", color4RGB);
-                intent.putExtra("color5RGB", color5RGB);
-                startActivity(intent);
-                finish();
-            }
+        button_back.setOnClickListener(v -> {
+            Intent intent1 = new Intent(NameActivity.this, ScratchActivity.class);
+            intent1.putExtra("color1RGB", color1RGB);
+            intent1.putExtra("color2RGB", color2RGB);
+            intent1.putExtra("color3RGB", color3RGB);
+            intent1.putExtra("color4RGB", color4RGB);
+            intent1.putExtra("color5RGB", color5RGB);
+            startActivity(intent1);
+            finish();
         });
 
-        button_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (paletteName.getText().toString().replace(" ", "").matches("")) {
-                    Toast.makeText(NameActivity.this, "Enter palette name", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Query dbByKey = database.orderByKey();
-                    dbByKey.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            int num = 1;
-                            String keyTest = "";
+        button_save.setOnClickListener(v -> {
+            if (paletteName.getText().toString().replace(" ", "").matches("")) {
+                Toast.makeText(NameActivity.this, "Enter palette name", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Query dbByKey = database.orderByKey();
+                dbByKey.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int num = 1;
+                        String keyTest = "";
 
-                            for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
-                                // Log.d("item id", snapshot.getKey());
-                                keyTest = "palette" + num;
-                                if (keyTest.matches(snapshot.getKey())) {
-                                    num++;
-                                }
-
-                            }
-                            key = "palette" + num;
-                            Log.d("item id", key);
-
-                            ArrayList<String> colors = new ArrayList<>();
-                            ArrayList<ArrayList<Integer>> rgbValues = new ArrayList<>();
-                            rgbValues.add(color1RGB);
-                            rgbValues.add(color2RGB);
-                            rgbValues.add(color3RGB);
-                            rgbValues.add(color4RGB);
-                            rgbValues.add(color5RGB);
-
-                            for (int i = 0; i < rgbValues.size(); i++) {
-                                int r = rgbValues.get(i).get(0);
-                                int g = rgbValues.get(i).get(1);
-                                int b = rgbValues.get(i).get(2);
-                                String colorHex = colorValueConverter.RGBToHex(r,g,b);
-                                colors.add(colorHex);
+                        for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
+                            // Log.d("item id", snapshot.getKey());
+                            keyTest = "palette" + num;
+                            if (keyTest.matches(snapshot.getKey())) {
+                                num++;
                             }
 
-                            /*
-                            String color1Hex = getHexCode(color1RGB);
-                            String color2Hex = getHexCode(color2RGB);
-                            String color3Hex = getHexCode(color3RGB);
-                            String color4Hex = getHexCode(color4RGB);
-                            String color5Hex = getHexCode(color5RGB);
+                        }
+                        key = "palette" + num;
+                        Log.d("item id", key);
 
-                            colors.add(color1Hex);
-                            colors.add(color2Hex);
-                            colors.add(color3Hex);
-                            colors.add(color4Hex);
-                            colors.add(color5Hex);
+                        ArrayList<String> colors = new ArrayList<>();
+                        ArrayList<ArrayList<Integer>> rgbValues = new ArrayList<>();
+                        rgbValues.add(color1RGB);
+                        rgbValues.add(color2RGB);
+                        rgbValues.add(color3RGB);
+                        rgbValues.add(color4RGB);
+                        rgbValues.add(color5RGB);
 
-                             */
-
-                            writeNewPalette(paletteName.getText().toString(), colors);
-                            finish();
+                        for (int i = 0; i < rgbValues.size(); i++) {
+                            int r = rgbValues.get(i).get(0);
+                            int g = rgbValues.get(i).get(1);
+                            int b = rgbValues.get(i).get(2);
+                            String colorHex = colorValueConverter.RGBToHex(r,g,b);
+                            colors.add(colorHex);
                         }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Log.e("loadPost:onCancelled", String.valueOf(databaseError.toException()));
-                        }
-                    });
-                }
+                        writeNewPalette(paletteName.getText().toString(), colors);
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("loadPost:onCancelled", String.valueOf(databaseError.toException()));
+                    }
+                });
             }
         });
     }
@@ -186,11 +164,4 @@ public class NameActivity extends AppCompatActivity {
         database.child(key).child("color5").setValue(colors.get(4));
     }
 
-    /*
-    public String getHexCode(ArrayList<Integer> rgb) {
-        String hex = String.format("%02x%02x%02x", rgb.get(0), rgb.get(1), rgb.get(2)).toUpperCase();
-        return hex;
-    }
-
-     */
 }

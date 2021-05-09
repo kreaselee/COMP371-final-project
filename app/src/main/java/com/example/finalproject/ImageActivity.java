@@ -3,24 +3,17 @@ package com.example.finalproject;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult;
 import androidx.annotation.Nullable;
@@ -28,14 +21,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.palette.graphics.Palette;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 
 public class ImageActivity extends AppCompatActivity {
 
     private ColorValueConverter colorValueConverter;
-    private static final int RESULT_LOAD_IMAGE = 1;
 
     private ImageView uploadedImage;
     private ImageView color1;
@@ -103,88 +93,38 @@ public class ImageActivity extends AppCompatActivity {
                     }
                 });
 
-        button_choose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startForResult.launch(galleryIntent);
-            }
+        button_choose.setOnClickListener(v -> {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startForResult.launch(galleryIntent);
         });
 
-        button_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        button_cancel.setOnClickListener(v -> finish());
+
+        button_save.setOnClickListener(v -> {
+            if (imageUploaded == false) {
+                Toast.makeText(ImageActivity.this, "Upload an image", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                ArrayList<ImageView> views = new ArrayList<>();
+                views.add(color1);
+                views.add(color2);
+                views.add(color3);
+                views.add(color4);
+                views.add(color5);
+
+                Intent intent = new Intent(ImageActivity.this, NameActivity.class);
+                for (int i = 0; i < views.size(); i++) {
+                    ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
+                    int color = drawable.getColor();
+                    int num = i+1;
+
+                    ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
+                    intent.putExtra("color" + num + "RGB", colorRGB);
+                }
+                startActivity(intent);
                 finish();
             }
         });
-
-        button_save.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View v) {
-                if (imageUploaded == false) {
-                    Toast.makeText(ImageActivity.this, "Upload an image", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    ArrayList<ImageView> views = new ArrayList<>();
-                    views.add(color1);
-                    views.add(color2);
-                    views.add(color3);
-                    views.add(color4);
-                    views.add(color5);
-
-                    Intent intent = new Intent(ImageActivity.this, NameActivity.class);
-                    for (int i = 0; i < views.size(); i++) {
-                        ColorDrawable drawable = (ColorDrawable) views.get(i).getBackground();
-                        int color = drawable.getColor();
-                        int num = i+1;
-
-                        ArrayList<Integer> colorRGB = colorValueConverter.intToRGB(color);
-                        intent.putExtra("color" + num + "RGB", colorRGB);
-                    }
-                    /*
-                    ArrayList<Integer> color1RGB = getRGBValues(color1);
-                    ArrayList<Integer> color2RGB = getRGBValues(color2);
-                    ArrayList<Integer> color3RGB = getRGBValues(color3);
-                    ArrayList<Integer> color4RGB = getRGBValues(color4);
-                    ArrayList<Integer> color5RGB = getRGBValues(color5);
-
-                    Intent intent = new Intent(ImageActivity.this, NameActivity.class);
-                    intent.putExtra("color1RGB", color1RGB);
-                    intent.putExtra("color2RGB", color2RGB);
-                    intent.putExtra("color3RGB", color3RGB);
-                    intent.putExtra("color4RGB", color4RGB);
-                    intent.putExtra("color5RGB", color5RGB);
-
-                     */
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        });
     }
 
-    /*
-    // method to get rgb values
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public ArrayList<Integer> getRGBValues(ImageView view) {
-        // get color of color imageView
-        ColorDrawable drawable = (ColorDrawable) view.getBackground();
-        int color = drawable.getColor();
-
-        // get rgb values of the color
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-
-        // add to arrayList and return arrayList
-        ArrayList<Integer> rgbValues = new ArrayList<>();
-        rgbValues.add(red);
-        rgbValues.add(green);
-        rgbValues.add(blue);
-
-        return rgbValues;
-    }
-
-     */
 }

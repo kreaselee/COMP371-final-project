@@ -34,6 +34,7 @@ public class ImageActivity extends AppCompatActivity {
     private ImageView color4;
     private ImageView color5;
 
+    private Button button_camera;
     private Button button_choose;
     private Button button_save;
     private Button button_cancel;
@@ -54,48 +55,44 @@ public class ImageActivity extends AppCompatActivity {
         color4 = findViewById(R.id.color4_image);
         color5 = findViewById(R.id.color5_image);
 
+        button_camera = findViewById(R.id.button_camera);
         button_choose = findViewById(R.id.button_choose_image);
         button_save = findViewById(R.id.button_save_image_palette);
         button_cancel = findViewById(R.id.button_cancel_image_palette);
 
-        ActivityResultLauncher<Intent> startForResult = registerForActivityResult(new StartActivityForResult(),
+        ActivityResultLauncher<Intent> startForResultCamera = registerForActivityResult(new StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent intent = result.getData();
+                        assert intent != null;
+                        Bundle extras = intent.getExtras();
+                        Bitmap imageBitmap = (Bitmap) extras.get("data");
+                        uploadedImage.setImageBitmap(imageBitmap);
+                        imageUploaded = true;
+                        setPalette(uploadedImage);
+                    }
+                });
+
+        button_camera.setOnClickListener(v -> {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);;
+            startForResultCamera.launch(cameraIntent);
+        });
+
+        ActivityResultLauncher<Intent> startForResultChoose = registerForActivityResult(new StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        assert intent != null;
                         Uri selectedImage = intent.getData();
                         uploadedImage.setImageURI(selectedImage);
                         imageUploaded = true;
-
-                        uploadedImage.invalidate();
-                        BitmapDrawable drawable = (BitmapDrawable) uploadedImage.getDrawable();
-                        Bitmap bitmap_image = drawable.getBitmap();
-
-                        Palette.Builder builder = new Palette.Builder(bitmap_image);
-                        Palette palette = builder.generate();
-
-                        ArrayList<ImageView> views = new ArrayList<>();
-                        views.add(color1);
-                        views.add(color2);
-                        views.add(color3);
-                        views.add(color4);
-                        views.add(color5);
-
-                        ArrayList<Integer> colors = new ArrayList<>();
-                        colors.add(palette.getDominantColor(4737096));
-                        colors.add(palette.getDarkVibrantColor(15263976));
-                        colors.add(palette.getDarkMutedColor(11053224));
-                        colors.add(palette.getMutedColor(14474460));
-                        colors.add(palette.getLightMutedColor(16316664));
-
-                        for (int i = 0; i < colors.size(); i++) {
-                            views.get(i).setBackgroundColor(colors.get(i));
-                        }
+                        setPalette(uploadedImage);
                     }
                 });
 
         button_choose.setOnClickListener(v -> {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startForResult.launch(galleryIntent);
+            startForResultChoose.launch(galleryIntent);
         });
 
         button_cancel.setOnClickListener(v -> finish());
@@ -127,4 +124,30 @@ public class ImageActivity extends AppCompatActivity {
         });
     }
 
+    private void setPalette(ImageView view) {
+        view.invalidate();
+        BitmapDrawable drawable = (BitmapDrawable) view.getDrawable();
+        Bitmap bitmap_image = drawable.getBitmap();
+
+        Palette.Builder builder = new Palette.Builder(bitmap_image);
+        Palette palette = builder.generate();
+
+        ArrayList<ImageView> views = new ArrayList<>();
+        views.add(color1);
+        views.add(color2);
+        views.add(color3);
+        views.add(color4);
+        views.add(color5);
+
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(palette.getDarkVibrantColor(4737096));
+        colors.add(palette.getLightVibrantColor(15263976));
+        colors.add(palette.getDarkMutedColor(11053224));
+        colors.add(palette.getMutedColor(14474460));
+        colors.add(palette.getLightMutedColor(16316664));
+
+        for (int i = 0; i < colors.size(); i++) {
+            views.get(i).setBackgroundColor(colors.get(i));
+        }
+    }
 }

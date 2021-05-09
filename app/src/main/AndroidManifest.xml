@@ -29,6 +29,7 @@
         <activity android:name=".activities.ScratchActivity"/>
         <activity android:name=".activities.ImageActivity"/>
         <activity android:name=".activities.NameActivity"/>
+        <activity android:name=".activities.ViewActivity"/>
     </application>
 
 </manifest>

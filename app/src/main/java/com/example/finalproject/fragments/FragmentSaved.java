@@ -20,6 +20,7 @@ import com.example.finalproject.PaletteEntity;
 import com.example.finalproject.PaletteViewModel;
 import com.example.finalproject.R;
 import com.example.finalproject.activities.ScratchActivity;
+import com.example.finalproject.activities.ViewActivity;
 
 import java.util.List;
 
@@ -59,21 +60,32 @@ public class FragmentSaved extends Fragment implements PaletteListAdapter.OnButt
                 // Log.d("message", "click successful " + position);
                 break;
             case R.id.button_saved_view:
-                Log.d("message", "click successful " + position);
+                // Log.d("message", "click successful " + position);
+                Intent viewIntent = new Intent(getContext(), ViewActivity.class);
+                viewIntent.putExtra("name", paletteEntity.name);
+                viewIntent.putExtra("color1RGB", colorValueConverter.hexToRGB(paletteEntity.color1));
+                viewIntent.putExtra("color2RGB", colorValueConverter.hexToRGB(paletteEntity.color2));
+                viewIntent.putExtra("color3RGB", colorValueConverter.hexToRGB(paletteEntity.color3));
+                viewIntent.putExtra("color4RGB", colorValueConverter.hexToRGB(paletteEntity.color4));
+                viewIntent.putExtra("color5RGB", colorValueConverter.hexToRGB(paletteEntity.color5));
+                viewIntent.putExtra("id", paletteEntity.id);
+                // Log.d("name", paletteEntity.name);
+                // Log.d("color1", paletteEntity.color1);
+                startActivity(viewIntent);
                 break;
             case R.id.button_saved_edit:
                 if (paletteEntity != null) {
-                    Intent intent = new Intent(getContext(), ScratchActivity.class);
-                    intent.putExtra("name", paletteEntity.name);
-                    intent.putExtra("color1RGB", colorValueConverter.hexToRGB(paletteEntity.color1));
-                    intent.putExtra("color2RGB", colorValueConverter.hexToRGB(paletteEntity.color2));
-                    intent.putExtra("color3RGB", colorValueConverter.hexToRGB(paletteEntity.color3));
-                    intent.putExtra("color4RGB", colorValueConverter.hexToRGB(paletteEntity.color4));
-                    intent.putExtra("color5RGB", colorValueConverter.hexToRGB(paletteEntity.color5));
-                    intent.putExtra("id", paletteEntity.id);
+                    Intent scratchIntent = new Intent(getContext(), ScratchActivity.class);
+                    scratchIntent.putExtra("name", paletteEntity.name);
+                    scratchIntent.putExtra("color1RGB", colorValueConverter.hexToRGB(paletteEntity.color1));
+                    scratchIntent.putExtra("color2RGB", colorValueConverter.hexToRGB(paletteEntity.color2));
+                    scratchIntent.putExtra("color3RGB", colorValueConverter.hexToRGB(paletteEntity.color3));
+                    scratchIntent.putExtra("color4RGB", colorValueConverter.hexToRGB(paletteEntity.color4));
+                    scratchIntent.putExtra("color5RGB", colorValueConverter.hexToRGB(paletteEntity.color5));
+                    scratchIntent.putExtra("id", paletteEntity.id);
                     // Log.d("name", paletteEntity.name);
                     // Log.d("color1", paletteEntity.color1);
-                    startActivity(intent);
+                    startActivity(scratchIntent);
                 }
                 Log.d("message", "click successful " + position);
                 break;

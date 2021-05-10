@@ -23,7 +23,4 @@
     <style name="ProximaTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/proxima_nova</item>
     </style>
-    <style name="ProximaButtonStyle" parent="android:Widget.Button">
-        <item name="android:fontFamily">@font/proxima_nova</item>
-    </style>
 </resources>

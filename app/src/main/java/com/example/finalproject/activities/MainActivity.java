@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +49,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(id, fragment);
         fragmentTransaction.commit();
     }
-
-
 }

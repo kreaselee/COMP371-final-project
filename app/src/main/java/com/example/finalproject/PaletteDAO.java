@@ -18,7 +18,7 @@ interface PaletteDAO {
      * get all PaletteEntities by id
      * @return List<Palette>
      */
-    @Query("SELECT * FROM palette_table ORDER BY id ASC")
+    @Query("SELECT * FROM palette_table ORDER BY id DESC")
     LiveData<List<PaletteEntity>> getAllPalettes();
 
     /**

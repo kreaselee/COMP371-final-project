@@ -61,10 +61,12 @@ public class ViewActivity extends AppCompatActivity {
             if (currentFragment == 0) {
                 loadFragment(fragmentViewText, R.id.fragmentContainerView_view);
                 currentFragment = 1;
+                button_change.setText(R.string.button_change_info);
             }
             else {
                 loadFragment(fragmentViewInfo, R.id.fragmentContainerView_view);
                 currentFragment = 0;
+                button_change.setText(R.string.button_change_text);
             }
         });
     }

@@ -33,17 +33,34 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void RGBtoHex() {
+    public void RGBToHex() {
         String hex1 = colorValueConverter.RGBToHex(255, 255, 255);
         assertEquals("FFFFFF", hex1); // pass
 
-        String hex2 = colorValueConverter.RGBToHex(-1, 255, 255);
-        assertEquals(6, hex2.length()); // fail
+        // String hex2 = colorValueConverter.RGBToHex(-1, 255, 255);
+        // assertEquals(6, hex2.length()); // fail
 
         String hex3 = colorValueConverter.RGBToHex(-1, 255, 255);
         assertEquals("", hex3); // pass
 
         String hex4 = colorValueConverter.RGBToHex(-1, 255, 255);
         assertEquals(0, hex4.length()); // pass
+    }
+
+    @Test
+    public void hexToRGB() {
+        ArrayList<Integer> rgb1 = colorValueConverter.hexToRGB("FFFFFF");
+        ArrayList<Integer> rgb1Test = new ArrayList<>();
+        rgb1Test.add(255);
+        rgb1Test.add(255);
+        rgb1Test.add(255);
+        assertEquals(rgb1Test, rgb1); // pass
+
+        ArrayList<Integer> rgb2 = colorValueConverter.hexToRGB("FFFFF");
+        ArrayList<Integer> rgb2Test = new ArrayList<>();
+        rgb2Test.add(255);
+        rgb2Test.add(255);
+        rgb2Test.add(255);
+        assertEquals(rgb2Test.size(), rgb2.size()); // returned arrayList has default values
     }
 }

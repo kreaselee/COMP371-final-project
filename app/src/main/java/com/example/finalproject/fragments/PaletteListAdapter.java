@@ -1,12 +1,15 @@
 package com.example.finalproject.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +55,7 @@ public class PaletteListAdapter extends ListAdapter<PaletteEntity, PaletteListAd
         return viewHolder;
     }
 
+    @SuppressLint("UseCompatTextViewDrawableApis")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         paletteEntity = getItem(position);

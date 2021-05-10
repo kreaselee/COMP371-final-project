@@ -19,7 +19,7 @@
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey2_mid"
+        android:background="@color/brown1_light"
         android:orientation="horizontal"
         android:paddingStart="8dp"
         android:paddingTop="8dp"
@@ -38,11 +38,9 @@
             android:layout_weight="1"
             android:fontFamily="@font/proxima_nova"
             android:text="@string/button_back"
-            android:textColor="@color/white"
             android:textStyle="bold"
             app:icon="@android:drawable/ic_menu_close_clear_cancel"
-            app:iconGravity="textStart"
-            app:iconTint="@color/white" />
+            app:iconGravity="textStart" />
 
         <Button
             android:id="@+id/button_view_change"
@@ -52,10 +50,8 @@
             android:layout_weight="1"
             android:fontFamily="@font/proxima_nova"
             android:text="@string/button_change_text"
-            android:textColor="@color/white"
             android:textStyle="bold"
             app:icon="@android:drawable/ic_menu_view"
-            app:iconGravity="textStart"
-            app:iconTint="@color/white" />
+            app:iconGravity="textStart" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

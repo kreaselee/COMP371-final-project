@@ -20,9 +20,9 @@
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,18 +30,28 @@
 
         <Button
             android:id="@+id/button_view_exit"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:text="@string/button_back" />
+            android:fontFamily="@font/proxima_nova"
+            android:text="@string/button_back"
+            android:textStyle="bold"
+            app:icon="@android:drawable/ic_menu_close_clear_cancel"
+            app:iconGravity="textStart" />
 
         <Button
             android:id="@+id/button_view_change"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="4dp"
             android:layout_weight="1"
-            android:text="@string/button_change" />
+            android:fontFamily="@font/proxima_nova"
+            android:text="@string/button_change_text"
+            android:textStyle="bold"
+            app:icon="@android:drawable/ic_menu_view"
+            app:iconGravity="textStart" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

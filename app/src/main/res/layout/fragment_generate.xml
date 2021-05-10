@@ -15,6 +15,7 @@
         android:layout_marginEnd="24dp"
         android:text="@string/generate_title"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -80,7 +81,9 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:text="@string/generate_button_random" />
+            android:fontFamily="@font/proxima_nova"
+            android:text="@string/generate_button_random"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <Button
@@ -89,7 +92,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
+        android:fontFamily="@font/proxima_nova"
         android:text="@string/generate_button_scratch"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -101,7 +106,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
+        android:fontFamily="@font/proxima_nova"
         android:text="@string/generate_button_image"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -114,6 +121,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/generate_or"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/button_scratch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,7 +133,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
+        android:fontFamily="@font/proxima_nova"
         android:text="@string/button_save"
+        android:textStyle="bold"
         app:icon="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout_generate"
         app:layout_constraintEnd_toEndOf="parent" />

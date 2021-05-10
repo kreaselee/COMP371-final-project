@@ -26,7 +26,8 @@
     <string name="button_edit">Edit</string>
     <string name="button_share">Share</string>
     <string name="button_back">Back</string>
-    <string name="button_change">Change view</string>
+    <string name="button_change_info">Info</string>
+    <string name="button_change_text">Text</string>
 
     <string name="scratch_palette">Create New Palette</string>
     <string name="tab_hex">HEX</string>

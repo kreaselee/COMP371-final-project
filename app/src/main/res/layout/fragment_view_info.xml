@@ -74,13 +74,15 @@
                 android:id="@+id/textView_view_color1_hex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hex" />
+                android:text="@string/hex"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_view_color1_rgb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rgb" />
+                android:text="@string/rgb"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -95,13 +97,15 @@
                 android:id="@+id/textView_view_color2_hex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hex" />
+                android:text="@string/hex"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_view_color2_rgb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rgb" />
+                android:text="@string/rgb"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,13 +120,15 @@
                 android:id="@+id/textView_view_color3_hex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hex" />
+                android:text="@string/hex"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_view_color3_rgb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rgb" />
+                android:text="@string/rgb"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,13 +143,15 @@
                 android:id="@+id/textView_view_color4_hex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hex" />
+                android:text="@string/hex"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_view_color4_rgb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rgb" />
+                android:text="@string/rgb"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -158,13 +166,15 @@
                 android:id="@+id/textView_view_color5_hex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/hex" />
+                android:text="@string/hex"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView_view_color5_rgb"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/rgb" />
+                android:text="@string/rgb"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

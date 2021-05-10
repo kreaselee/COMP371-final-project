@@ -83,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/proxima_nova"
             app:icon="@android:drawable/ic_menu_delete"
             app:iconGravity="textEnd" />
 
@@ -92,6 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/proxima_nova"
             app:icon="@android:drawable/ic_menu_edit"
             app:iconGravity="textEnd" />
 
@@ -101,6 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/proxima_nova"
             app:icon="@android:drawable/ic_menu_view"
             app:iconGravity="textEnd" />
 
@@ -110,6 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="@font/proxima_nova"
             app:icon="@android:drawable/ic_menu_share"
             app:iconGravity="textEnd" />
 

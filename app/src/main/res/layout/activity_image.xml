@@ -15,6 +15,7 @@
         android:layout_marginEnd="24dp"
         android:text="@string/image_palette"
         android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,7 +43,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
+        android:fontFamily="@font/proxima_nova"
         android:text="@string/button_choose_image"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_camera" />
@@ -54,7 +57,9 @@
         android:layout_marginStart="12dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
+        android:fontFamily="@font/proxima_nova"
         android:text="@string/button_save"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_cancel_image_palette" />
@@ -112,7 +117,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="24dp"
+        android:fontFamily="@font/proxima_nova"
         android:text="@string/button_cancel"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_save_image_palette"
         app:layout_constraintStart_toStartOf="parent" />
@@ -124,7 +131,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="24dp"
+        android:fontFamily="@font/proxima_nova"
         android:text="@string/button_camera"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toStartOf="@+id/button_choose_image"
         app:layout_constraintStart_toStartOf="parent" />

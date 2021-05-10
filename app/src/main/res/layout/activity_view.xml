@@ -10,7 +10,6 @@
         android:id="@+id/fragmentContainerView_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,38 +19,43 @@
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:background="@color/grey2_mid"
         android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView_view">
 
         <Button
             android:id="@+id/button_view_exit"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
             android:layout_weight="1"
             android:fontFamily="@font/proxima_nova"
             android:text="@string/button_back"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:icon="@android:drawable/ic_menu_close_clear_cancel"
-            app:iconGravity="textStart" />
+            app:iconGravity="textStart"
+            app:iconTint="@color/white" />
 
         <Button
             android:id="@+id/button_view_change"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_weight="1"
             android:fontFamily="@font/proxima_nova"
             android:text="@string/button_change_text"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:icon="@android:drawable/ic_menu_view"
-            app:iconGravity="textStart" />
+            app:iconGravity="textStart"
+            app:iconTint="@color/white" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
